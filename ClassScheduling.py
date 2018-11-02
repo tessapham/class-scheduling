@@ -161,7 +161,7 @@ def assignClassToTime(c):
 
     for t in times:
         # skip if the professor teaching class c is already teaching another class in this time
-        if prof in professorsInTime.get(t):
+        if len(professorsInTime.get(t)) != 0 & prof in professorsInTime.get(t):
             continue
 
         # skip if no more available rooms
