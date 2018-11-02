@@ -205,8 +205,8 @@ def main():
 
     parse()
 
-    # for c in classes:
-    #     assignClassToTime(c)
+    for c in classes:
+        assignClassToTime(c)
 
 
     
