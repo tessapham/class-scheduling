@@ -14,10 +14,10 @@ TESSA: Hey Lizzy! If you're just parsing the demo data, since we don't have pref
 If given a table like this, parse students = {Elizabeth, Tessa, Xinyi} and preferences = {[a, b, c, d], [b, e, f, h], [c, g, m, n]}.
 
 Arrays we need from parsing: students, preferences, classes
-    students - list of all students
-    preferences - list of lists of preferred classes for all students (parsed in same order as students)
-    classes - list of all classes
-    times - list of time slots
+    students -  array of all students
+    preferences - array of preference lists of all students (parsed in same order as students)
+    classes - array of all classes, each represented by an integer from 1 - m
+    times - array of all time slots, each represented by an integer from 1 - w
 '''
 
 # parsing excel
@@ -147,8 +147,8 @@ def construct():
             studentsInClass.get(c).append(s)
             # increment the overlaps of class c with each class in the rest of list p
             for other_c in p[(p.index(c) + 1)]:
-                overlap[classes.index(c)][classes.index(other_c)] += 1
-                overlap[classes.index(other_c)][classes.index(c)] += 1
+                overlap[c][other_c] += 1
+                overlap[other_c][c] += 1
 
 # sort classes by size in descending order (this function is not working though, someone who knows Python please help figure out!)
 # the idea is: we want to sort the array classes, but we have to get the size from len(studentsInClass.get(c)) for each c in classes
@@ -169,12 +169,12 @@ def assignClassToTime(c):
             continue
 
         # skip if number of students in class c is greater than the size of the biggest available room in time t
-        if len(studentsInClass.get(c)) > availableRoomsInTime.get(t)[1]:
+        if len(studentsInClass.get(c)) > availableRoomsInTime.get(t)[0]:
             continue
         
         count = 0
         for assigned_c in classesInTime.get(t):
-            count += overlap[classes.index(c)][classes.index(assigned_c)]
+            count += overlap[c][assigned_c]
         
         if count < min_overlap:
             min_overlap = count
