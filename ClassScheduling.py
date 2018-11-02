@@ -19,20 +19,112 @@ Arrays we need from parsing: students, preferences, classes
     classes - list of all classes
     times - list of time slots
 '''
+
+# parsing excel
+import os
+import pandas as pd
+import xlrd
+
+
 # global arrays
 students = []
-preferences = []
+# note: list of preferences inside preference array begin at index 1 NOT index 0 in order to correspond to each student's unique number (ie student 1 in list of students corresponds to first index sub array in preferences array)
+preferences = [] 
 classes = []
 times = []
 professorOfClass = []
 
 
-'''
+
 # write multiple parse functions (for the demo file, for the preference lists of students, etc.) if necessary
-def parse(file):
-    # parse file to put values into global arrays: students, preferences, classes, times
+
+# parsing for demo data
+def parse():
+    
+    # students
+    DSP2 = open("basic/demo_studentprefs.txt","r") #opens file with name of "test.txt"
+    studentInfo = DSP2.read().replace("\t"," ").replace("\n"," ").split(" ")
+
+    for i in range(1,int(studentInfo[1])+1):
+        students.append(str(i))
+    print "students: "
+    print students
+
+
+    # preferences
+    DSP1 = open("basic/demo_studentprefs.txt","r") #opens file with name of "test.txt"
+    preferencesInfo = DSP1.read().replace("\t"," ").replace("\n"," ").split(" ")
+
+    temp = []
+    count = 0; 
+    for i in range (2, len(preferencesInfo)):
+        if (count % 5  != 0):
+            temp.append(preferencesInfo[i]) 
+        count = count + 1
+
+    count2 = 0; 
+    individualPref = []
+    preferences.append([])
+    for i in range (0, len(temp)):
+        individualPref.append(temp[i])
+        count2 = count2 + 1
+        if (count2 == 4):
+            preferences.append(individualPref)
+            count2 = 0
+            individualPref = []
+    print "preferences: "
+    print preferences
+
+    DSP1.close()
+
+
+    
+    DC = open("basic/demo_constraints.txt","r") #opens file with name of "test.txt"
+    splitDemoCon = DC.read().replace("\t"," ").replace("\n"," ").split(" ")
+
+    # times
+    for i in range(0,len(splitDemoCon)): 
+        if splitDemoCon[i] == "Classes":
+            for j in range(0, int(splitDemoCon[i+1])):
+                # print splitDemoCon[j]
+                classes.append(str(j))
+    print "classes: "
+    print classes
+
+
+    # times
+    for i in range(0,int(splitDemoCon[2])):
+        times.append(str(i))
+    print "times: "
+    print times
+
+    # professorOfClass
+    for i in range(0,len(splitDemoCon)): 
+        if splitDemoCon[i] == "Teachers":
+            for j in range(i+3, len(splitDemoCon), 2):
+                # print splitDemoCon[j]
+                professorOfClass.append(splitDemoCon[j])
+    print "professorOfClass"
+    print professorOfClass
+
+    DC.close()
+    
+
+
+# parsing for bmc data: 
+def BMCparse(fileName):
+
+
+    # students = 
+    # preferences =
+    classes = fileName["Class Nbr"]
+
+    times = fileName["Srt1 AM/PM"] + " -" + fileName["End 1 AMPM"]
+    # print times
     # parse file to build array professorOfClass: go through list of classes from top to bottom, save the professor's name in professorOfClass[c].
-'''
+    professorOfClass = fileName["Name"]
+    # print professorOfClass
+
 
 # Now that we have the arrays above, we can initialize these following arrays. The order can't be changed!
 
@@ -97,7 +189,27 @@ def assignClassToTime(c):
 
 def main():
     # call parse methods here if necessary?
-    for c in classes:
-        assignClassToTime(c)
+        # parse file to put values into global arrays: students, preferences, classes, times
+    # Retrieve current working directory (`cwd`)
 
+    # --- parsing for BMC data
+
+    # cwd = os.getcwd()
+    # os.chdir("brynmawr")
+    # fileName = 'bmc-data-f17.xls'
+    # BMCdata = pd.read_excel(fileName)
+
+    # BMCparse(BMCdata)
+
+    # --- parsing for BMC data
+
+    parse()
+
+    # for c in classes:
+    #     assignClassToTime(c)
+
+
+    
+if __name__ == "__main__":
+    main()
 
