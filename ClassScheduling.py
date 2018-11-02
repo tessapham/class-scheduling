@@ -132,7 +132,7 @@ def BMCparse(fileName):
 studentsInClass = {c: [] for c in classes}
 # classesInTime: a dictionary (key = time, value = list of classes in that time)
 classesInTime = {t: [] for t in times}
-# classesInTime: a dictionary (key = time, value = list of professors teaching a class in that time)
+# professorsInTime: a dictionary (key = time, value = list of professors teaching a class in that time)
 professorsInTime = {t: [] for t in times}
 # availableRoomsInTime: a dictionary (key = time, value = list of tuples (room, size), ranked from largest to smallest)
 availableRoomsInTime = {t: [] for t in times}
