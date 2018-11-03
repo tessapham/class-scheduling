@@ -6,9 +6,7 @@ Created on Fri Nov  2 21:17:46 2018
 @author: Elizabeth Chan, Tessa Pham, Xinyi Wang
 
 """
-
-'''
-
+"""
 10:48 Fri: an easy way to handle the 0 position is just to have the time id and classes start
 from 0. in reality you're converting the class numbers to numbers from 1 anyways. so why not.
 
@@ -33,7 +31,7 @@ Arrays we need from parsing: students, preferences, classes
     preferences - array of preference lists of all students (parsed in same order as students)
     classes - array of all classes, each represented by an integer from 1 to m
     times - array of all time slots, each represented by an integer from 1 to w
-'''
+"""
 
 # parsing excel
 import os
@@ -96,8 +94,6 @@ def parse():
                 # classes.append(str(j))
                 classes.append(j) # classes[0..13] will store 1 - 14, same as students above!
     
-    
-
     # times
     for i in range(0, int(splitDemoCon[2])):
         times.append(str(i))
@@ -258,11 +254,10 @@ Lizzy/Tessa's comments in main
     # cwd = os.getcwd()
     # os.chdir("brynmawr")
     # fileName = 'bmc-÷÷÷÷÷÷÷÷÷≥data-f17.xls'
+    # fileName = 'bmc-data-f17.xls'
     # BMCdata = pd.read_excel(fileName)
 
     # BMCparse(BMCdata)
 
-    # --- parsing for BMC data
-    
-    
+    # --- parsing for BMC data  
 """
