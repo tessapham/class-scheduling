@@ -154,7 +154,7 @@ def BMCparse():
 
     professorOfClass = BMCexcel["Name"]
 
-    studentCap = BMCexcel["Tot Enrl"]
+    studentCap = BMCexcel["Class Cap"]
 
 
 
