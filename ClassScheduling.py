@@ -45,7 +45,7 @@ This function incurs cheap costs.
 import os
 import pandas
 import xlrd
-
+import csv
 
 # write multiple parse functions (for the demo file, for the preference lists of students, etc.) if necessary
 
@@ -158,23 +158,49 @@ def BMCparse():
     # instead use this array that is the number of student capacity 
     studentCap = BMCexcel["Class Cap"]
 
+
+    print "\n\ndaysOfWeek \n {}".format(dayOfWeek)
+    print "\n\nstartTime \n {}".format(startTime)
+    print "\n\nendTime \n {}".format(endTime)
+    print "\n\nclasses \n {}".format(classes)
+    print "\n\nprofessorOfClass \n {}".format(professorOfClass)
+
+
     # data not availble from excel file
     # preferences = [] 
 
 
 
 
-def HCparse(fileName):
-    HCexcel = pandas.read_excel('haverford/haverfordEnrollmentDataS14.csv')
+def HCparse():
+    # HCexcel = pandas.read_excel('haverford/haverfordEnrollmentDataS14.csv')
 
-    # times = [] has been replaced with following three lists 
-    dayOfWeek = HCexcel["Days 1"]
-    startTime = HCexcel["Srt1 AM/PM"]
-    endTime = HCexcel["End 1 AMPM"]
 
-    classes = HCexcel["Course ID"]
+    with open('haverford/haverfordEnrollmentDataS14.csv') as csvfile:
+        readCSV = csv.reader(csvfile, delimiter=',')
+        dates = []
+        colors = []
+        for row in readCSV:
+            # times = [] has been replaced with following three lists 
+            dayOfWeek = row[18]
+            startTime = row[13]
+            endTime = row[16]
 
-    professorOfClass = HCexcel["Instructor ID"]
+            classes = row[1]
+
+            professorOfClass = row[11]
+            # colors.append(color)
+
+        print(dayOfWeek[0])
+        # print(colors[0])
+
+
+    # print dayOfWeek
+    # print startTime
+    # print endTime
+    # print classes
+    # print professorOfClass
+
 
     # data not availble from excel file
     # students = []
@@ -299,6 +325,7 @@ def main():
     # f.close()
 
     BMCparse()
+    # HCparse()
 
     return classesInTime
    
