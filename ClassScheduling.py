@@ -240,6 +240,42 @@ def HCparse():
 
 # Another level for constructing the inputs.
 
+# parameter: a 3-tupe (daysOfWeek, startTime, endTime). Account for overlapping times.
+def refineTimeList(timeTuples):
+    # remove duplicate times
+    timeTuples = set(timeTuples)
+
+    MWF = [t for t in timeTuples if t[0] in ['M', 'W', 'F', 'MW', 'WF', 'MF', 'MWF']]
+    TTH = [t for t in timeTuples if t[0] in ['T', 'TH', 'TTH']]
+
+    # From here we will use Greedy to classify overlapping times.
+    # sort MWF and TR by start times
+    MWF = sorted(MWF, key = lambda x: x[1])
+    TTH = sorted(TR, key = lambda x: x[1])
+
+    MWFList = []
+    TTHList = []
+
+    i = 0
+    for j in range(1, len(MWF)):
+        # if start time of this slot is earlier than the finish time of the original slot
+        if MWF[j][1] < MWF[i][2]:
+            MWFList[i].append(MWF[j])
+        else:
+            i += 1
+            MWFList[i].append(MWF[j])
+    
+    i = 0
+    for j in range(1, len(TTH)):
+        if TTH[j][1] < TTH[i][2]:
+            TTHList[i]. append(TTH[j])
+        else:
+            i += 1
+            TTHList[i].append(TTH[j])
+    
+    return MWFList, TTHList
+
+
 def construct(students, preferences, classes, classrooms, sizesOfClassrooms, times):
     # studentsInClass: a dictionary (key = class, value = list of students in that class)
     studentsInClass = {c: [] for c in range(0, 15)}
@@ -250,8 +286,8 @@ def construct(students, preferences, classes, classrooms, sizesOfClassrooms, tim
         # for each class c in the preference list of student s
         for c in p:
             # add s to student list of class c
-            if studentsInClass[c]==None:
-                studentsInClass[c]=[s]
+            if studentsInClass[c] is None:
+                studentsInClass[c] = [s]
             else:
                 studentsInClass[c].append(s)
             # increment the overlaps of class c with each class in the rest of list p
