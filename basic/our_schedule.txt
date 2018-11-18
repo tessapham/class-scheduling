@@ -1,0 +1,15 @@
+Course	Room	Teacher	Time	Students
+1	7
+2	10
+3	11
+4	1
+5	2
+6	6
+7	8
+8	3
+9	12
+10	13
+11	4
+12	5
+13	9
+14	14

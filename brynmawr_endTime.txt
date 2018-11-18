@@ -1,0 +1,508 @@
+ 3:45 PM
+ 1:00 PM
+ 9:45 AM
+ 3:45 PM
+12:00 PM
+ 2:15 PM
+ 2:00 PM
+ 3:00 PM
+11:15 AM
+11:15 AM
+12:45 PM
+ 0:00 AM
+11:00 AM
+12:45 PM
+ 2:00 PM
+ 2:30 PM
+11:15 AM
+10:00 PM
+ 9:00 PM
+ 2:15 PM
+ 9:00 AM
+10:00 AM
+10:00 AM
+11:00 AM
+ 9:00 AM
+10:00 AM
+ 3:30 PM
+11:30 AM
+10:00 AM
+12:00 PM
+ 2:00 PM
+ 2:30 PM
+ 2:00 PM
+ 2:00 PM
+ 3:00 PM
+ 3:45 PM
+10:00 AM
+11:00 AM
+12:00 PM
+11:00 AM
+11:15 AM
+12:45 PM
+ 4:00 PM
+11:00 AM
+ 2:30 PM
+ 2:30 PM
+12:00 PM
+ 4:00 PM
+ 4:00 PM
+ 3:45 PM
+ 3:45 PM
+ 8:30 PM
+ 5:30 PM
+ 3:45 PM
+10:00 AM
+ 2:30 PM
+ 2:15 PM
+11:30 AM
+11:15 AM
+ 2:15 PM
+ 2:30 PM
+ 2:15 PM
+ 9:45 AM
+ 2:30 PM
+11:00 AM
+ 9:00 AM
+10:00 AM
+10:00 AM
+10:00 AM
+11:00 AM
+10:00 AM
+11:00 AM
+11:00 AM
+11:00 AM
+ 4:00 PM
+11:15 AM
+ 2:30 PM
+ 3:45 PM
+10:00 AM
+10:00 AM
+ 3:45 PM
+ 1:00 PM
+ 1:00 PM
+ 1:00 PM
+12:45 PM
+12:45 PM
+nan
+ 2:30 PM
+ 2:00 PM
+ 3:30 PM
+11:15 AM
+10:00 AM
+10:00 AM
+10:00 AM
+ 2:15 PM
+ 4:00 PM
+11:30 AM
+ 0:00 AM
+ 0:00 AM
+ 4:00 PM
+11:15 AM
+11:00 AM
+11:15 AM
+ 2:15 PM
+11:00 AM
+ 1:00 PM
+10:00 AM
+12:00 PM
+12:00 PM
+11:15 AM
+12:00 PM
+11:15 AM
+10:00 AM
+11:00 AM
+ 1:00 PM
+ 1:00 PM
+11:30 AM
+ 4:00 PM
+ 2:15 PM
+11:30 AM
+ 2:30 PM
+ 4:00 PM
+ 3:45 PM
+ 2:30 PM
+ 9:00 PM
+11:15 AM
+12:45 PM
+ 1:00 PM
+12:00 PM
+ 1:00 PM
+11:15 AM
+ 3:45 PM
+ 2:30 PM
+ 3:45 PM
+ 3:45 PM
+12:00 PM
+ 1:00 PM
+11:15 AM
+ 2:30 PM
+11:15 AM
+ 2:15 PM
+11:15 AM
+ 9:45 AM
+11:15 AM
+11:15 AM
+11:15 AM
+12:00 PM
+ 3:45 PM
+11:30 AM
+ 2:30 PM
+ 4:00 PM
+11:30 AM
+ 3:45 PM
+ 1:00 PM
+ 9:45 AM
+11:30 AM
+ 3:45 PM
+ 2:15 PM
+11:30 AM
+12:00 PM
+ 4:00 PM
+ 4:00 PM
+ 5:30 PM
+ 7:00 PM
+ 1:00 PM
+10:00 PM
+ 4:00 PM
+12:00 PM
+ 1:00 PM
+ 4:00 PM
+ 2:30 PM
+11:15 AM
+ 0:00 AM
+11:15 AM
+11:30 AM
+ 2:30 PM
+11:30 AM
+ 1:00 PM
+ 4:00 PM
+ 0:00 AM
+ 4:00 PM
+11:30 AM
+ 4:00 PM
+ 2:00 PM
+ 2:30 PM
+ 2:30 PM
+12:45 PM
+ 0:00 AM
+ 0:00 AM
+ 2:30 PM
+ 4:00 PM
+ 2:15 PM
+11:00 AM
+ 4:00 PM
+ 3:45 PM
+ 4:00 PM
+ 4:00 PM
+ 2:00 PM
+10:00 AM
+ 4:00 PM
+ 2:15 PM
+10:00 PM
+ 4:00 PM
+ 0:00 AM
+ 2:00 PM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 4:00 PM
+10:00 PM
+ 4:00 PM
+ 2:00 PM
+ 0:00 AM
+ 6:00 PM
+ 4:00 PM
+10:00 PM
+ 4:00 PM
+12:00 PM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 4:00 PM
+ 2:15 PM
+ 3:45 PM
+ 4:00 PM
+ 2:15 PM
+ 9:45 AM
+11:30 AM
+ 4:00 PM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+11:00 AM
+ 3:45 PM
+11:15 AM
+ 2:15 PM
+11:15 AM
+ 2:15 PM
+ 4:00 PM
+11:15 AM
+10:00 PM
+11:00 AM
+11:00 AM
+ 2:15 PM
+ 3:45 PM
+10:00 PM
+ 4:00 PM
+ 4:00 PM
+ 4:00 PM
+11:15 AM
+ 4:00 PM
+ 4:00 PM
+ 3:45 PM
+ 4:00 PM
+ 4:00 PM
+ 2:00 PM
+ 3:45 PM
+ 2:30 PM
+ 0:00 AM
+11:30 AM
+12:00 PM
+11:15 AM
+ 4:00 PM
+ 4:00 PM
+ 2:30 PM
+nan
+ 2:30 PM
+ 1:00 PM
+ 4:00 PM
+ 4:00 PM
+12:00 PM
+ 4:00 PM
+ 2:15 PM
+ 3:15 PM
+12:45 PM
+ 2:30 PM
+ 2:30 PM
+ 3:30 PM
+ 1:00 PM
+ 6:00 PM
+ 3:45 PM
+ 1:00 PM
+ 7:00 PM
+ 4:00 PM
+nan
+nan
+nan
+nan
+11:15 AM
+ 2:00 PM
+ 2:00 PM
+ 2:00 PM
+ 2:00 PM
+nan
+11:00 AM
+12:00 PM
+ 4:30 PM
+ 5:30 PM
+ 4:30 PM
+ 4:30 PM
+ 1:00 PM
+12:30 PM
+ 0:00 AM
+ 4:00 PM
+11:00 AM
+10:00 AM
+ 3:30 PM
+ 6:00 PM
+ 3:00 PM
+ 5:30 PM
+ 3:00 PM
+ 5:30 PM
+ 1:00 PM
+12:45 PM
+ 5:30 PM
+ 2:30 PM
+ 4:00 PM
+11:00 AM
+ 4:00 PM
+nan
+ 2:15 PM
+ 1:20 PM
+ 5:00 PM
+ 1:20 PM
+10:00 AM
+11:00 AM
+nan
+ 4:00 PM
+ 4:00 PM
+nan
+nan
+nan
+nan
+nan
+ 4:00 PM
+nan
+nan
+nan
+nan
+nan
+ 3:45 PM
+nan
+nan
+12:45 PM
+ 2:00 PM
+nan
+nan
+nan
+ 2:30 PM
+ 4:00 PM
+ 2:30 PM
+ 4:00 PM
+ 3:45 PM
+12:45 PM
+11:15 AM
+12:45 PM
+12:45 PM
+12:45 PM
+ 2:30 PM
+12:45 PM
+12:45 PM
+12:45 PM
+ 2:15 PM
+12:45 PM
+ 2:15 PM
+12:45 PM
+12:45 PM
+ 3:45 PM
+12:45 PM
+12:45 PM
+12:45 PM
+12:45 PM
+12:45 PM
+12:45 PM
+12:45 PM
+12:45 PM
+12:45 PM
+12:45 PM
+12:45 PM
+12:45 PM
+12:45 PM
+12:45 PM
+12:45 PM
+ 2:30 PM
+ 2:15 PM
+10:00 AM
+12:45 PM
+12:45 PM
+ 4:30 PM
+11:30 AM
+12:00 PM
+11:15 AM
+ 2:00 PM
+nan
+ 1:00 PM
+ 1:00 PM
+ 2:30 PM
+ 8:00 PM
+nan
+ 7:00 PM
+ 4:00 PM
+nan
+11:15 AM
+ 3:45 PM
+ 3:45 PM
+11:15 AM
+11:15 AM
+nan
+nan
+ 4:00 PM
+ 9:00 PM
+ 4:00 PM
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+ 5:00 PM
+nan
+ 8:45 AM
+ 1:20 PM
+nan
+ 6:00 PM
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan

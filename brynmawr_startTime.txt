@@ -1,0 +1,508 @@
+ 2:25 PM
+12:10 PM
+ 8:25 AM
+ 2:25 PM
+ 9:10 AM
+12:55 PM
+12:10 PM
+ 1:10 PM
+ 9:55 AM
+ 9:55 AM
+11:25 AM
+ 0:00 AM
+10:10 AM
+11:25 AM
+12:10 PM
+ 1:10 PM
+ 9:55 AM
+ 7:10 PM
+ 7:10 PM
+12:55 PM
+ 8:10 AM
+ 9:10 AM
+ 9:10 AM
+10:10 AM
+ 8:10 AM
+ 9:10 AM
+ 1:10 PM
+10:10 AM
+ 9:10 AM
+11:10 AM
+ 1:10 PM
+ 1:40 PM
+ 1:10 PM
+ 1:10 PM
+ 1:10 PM
+ 2:25 PM
+ 9:10 AM
+10:10 AM
+11:10 AM
+10:10 AM
+ 9:55 AM
+11:25 AM
+ 1:10 PM
+10:10 AM
+ 1:10 PM
+ 1:10 PM
+ 9:10 AM
+ 2:10 PM
+ 1:10 PM
+ 2:25 PM
+ 2:25 PM
+ 7:10 PM
+ 4:10 PM
+ 2:25 PM
+ 9:10 AM
+ 1:10 PM
+12:55 PM
+10:10 AM
+ 9:55 AM
+12:55 PM
+ 1:10 PM
+12:55 PM
+ 8:25 AM
+ 1:10 PM
+10:10 AM
+ 8:10 AM
+ 9:10 AM
+ 9:10 AM
+ 9:10 AM
+10:10 AM
+ 9:10 AM
+10:10 AM
+10:10 AM
+10:10 AM
+ 2:40 PM
+ 9:55 AM
+ 1:10 PM
+ 2:25 PM
+ 9:10 AM
+ 9:10 AM
+ 2:25 PM
+12:10 PM
+12:10 PM
+12:10 PM
+11:15 AM
+11:25 AM
+nan
+ 1:10 PM
+ 1:10 PM
+ 1:10 PM
+ 9:55 AM
+ 9:10 AM
+ 9:10 AM
+ 9:10 AM
+12:55 PM
+ 2:10 PM
+10:10 AM
+ 0:00 AM
+ 0:00 AM
+ 2:40 PM
+ 9:55 AM
+10:10 AM
+ 9:55 AM
+12:55 PM
+10:10 AM
+12:10 PM
+ 9:10 AM
+11:10 AM
+11:10 AM
+ 9:55 AM
+11:10 AM
+ 9:55 AM
+ 9:10 AM
+10:10 AM
+12:10 PM
+12:10 PM
+10:10 AM
+ 2:10 PM
+12:55 PM
+10:10 AM
+ 1:10 PM
+ 2:40 PM
+ 2:25 PM
+ 1:10 PM
+ 7:10 PM
+ 9:55 AM
+11:25 AM
+12:10 PM
+11:10 AM
+12:10 PM
+ 9:55 AM
+ 2:25 PM
+ 1:10 PM
+ 2:25 PM
+ 2:25 PM
+11:10 AM
+12:10 PM
+ 9:55 AM
+ 1:10 PM
+ 9:55 AM
+12:55 PM
+ 9:55 AM
+ 8:25 AM
+ 9:55 AM
+ 9:55 AM
+ 9:55 AM
+ 9:10 AM
+ 2:25 PM
+10:10 AM
+ 1:10 PM
+ 1:10 PM
+10:10 AM
+ 2:25 PM
+12:10 PM
+ 8:25 AM
+10:10 AM
+ 2:25 PM
+12:55 PM
+10:10 AM
+11:10 AM
+ 1:10 PM
+ 1:10 PM
+ 4:10 PM
+ 5:40 PM
+11:40 AM
+ 7:10 PM
+ 1:10 PM
+11:10 AM
+12:10 PM
+ 1:00 PM
+ 1:10 PM
+ 9:55 AM
+ 0:00 AM
+ 9:55 AM
+10:10 AM
+ 1:10 PM
+10:10 AM
+12:10 PM
+ 1:10 PM
+ 0:00 AM
+ 2:40 PM
+10:10 AM
+ 2:40 PM
+12:10 PM
+ 1:10 PM
+ 1:10 PM
+11:25 AM
+ 0:00 AM
+ 0:00 AM
+ 1:10 PM
+ 2:40 PM
+12:55 PM
+10:10 AM
+ 2:40 PM
+ 2:25 PM
+ 1:10 PM
+ 2:10 PM
+12:10 PM
+ 8:00 AM
+ 1:10 PM
+12:55 PM
+ 7:10 PM
+ 2:10 PM
+ 0:00 AM
+12:10 PM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 2:10 PM
+ 7:10 PM
+ 2:40 PM
+12:10 PM
+ 0:00 AM
+ 4:00 PM
+ 2:40 PM
+ 7:10 PM
+ 1:10 PM
+ 9:10 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 1:10 PM
+12:55 PM
+ 2:25 PM
+ 2:40 PM
+12:55 PM
+ 8:25 AM
+10:10 AM
+ 1:10 PM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+ 0:00 AM
+10:10 AM
+ 2:25 PM
+ 9:55 AM
+12:55 PM
+ 9:55 AM
+12:55 PM
+ 1:10 PM
+ 9:55 AM
+ 7:10 PM
+10:10 AM
+10:10 AM
+12:55 PM
+ 2:25 PM
+ 7:10 PM
+ 1:10 PM
+ 2:10 PM
+ 2:10 PM
+ 9:55 AM
+ 1:10 PM
+ 2:10 PM
+ 2:25 PM
+ 1:10 PM
+ 2:40 PM
+12:10 PM
+ 2:25 PM
+ 1:10 PM
+ 0:00 AM
+10:10 AM
+11:10 AM
+ 9:55 AM
+ 1:10 PM
+ 2:40 PM
+ 1:10 PM
+nan
+ 1:10 PM
+12:10 PM
+ 1:10 PM
+ 2:40 PM
+11:10 AM
+ 2:40 PM
+12:55 PM
+ 2:25 PM
+11:55 AM
+ 1:10 PM
+ 1:10 PM
+ 2:40 PM
+12:10 PM
+ 4:40 PM
+ 2:25 PM
+11:40 AM
+ 5:40 PM
+ 1:30 PM
+nan
+nan
+nan
+nan
+ 9:55 AM
+ 1:10 PM
+ 1:10 PM
+ 1:10 PM
+ 1:10 PM
+nan
+10:10 AM
+11:10 AM
+ 1:10 PM
+ 2:10 PM
+ 1:10 PM
+ 1:10 PM
+ 9:40 AM
+ 9:10 AM
+ 0:00 AM
+ 3:10 PM
+10:10 AM
+ 9:10 AM
+ 1:40 PM
+ 4:10 PM
+ 1:10 PM
+ 3:40 PM
+ 1:10 PM
+ 3:40 PM
+12:10 PM
+11:25 AM
+ 4:10 PM
+ 1:10 PM
+ 2:40 PM
+ 9:00 AM
+ 1:10 PM
+nan
+12:55 PM
+11:00 AM
+ 2:40 PM
+11:00 AM
+ 9:10 AM
+10:10 AM
+nan
+ 1:10 PM
+ 1:10 PM
+nan
+nan
+nan
+nan
+nan
+ 2:10 PM
+nan
+nan
+nan
+nan
+nan
+ 2:25 PM
+nan
+nan
+11:25 AM
+ 1:00 PM
+nan
+nan
+nan
+ 1:10 PM
+ 2:10 PM
+ 1:10 PM
+ 2:40 PM
+ 2:25 PM
+11:25 AM
+ 9:55 AM
+11:25 AM
+11:25 AM
+11:25 AM
+ 1:10 PM
+11:25 AM
+11:25 AM
+11:25 AM
+12:55 PM
+11:25 AM
+12:55 PM
+11:25 AM
+11:25 AM
+ 2:25 PM
+11:25 AM
+11:25 AM
+11:25 AM
+11:25 AM
+11:25 AM
+11:25 AM
+11:25 AM
+11:25 AM
+11:25 AM
+11:25 AM
+11:25 AM
+11:25 AM
+11:25 AM
+11:25 AM
+11:25 AM
+ 1:10 PM
+12:55 PM
+ 9:10 AM
+ 9:45 AM
+ 9:45 AM
+ 1:30 PM
+10:10 AM
+11:10 AM
+ 9:55 AM
+ 1:10 PM
+nan
+12:10 PM
+11:40 AM
+ 1:10 PM
+ 6:00 PM
+nan
+ 5:30 PM
+ 2:40 PM
+nan
+ 9:55 AM
+ 2:25 PM
+ 2:25 PM
+ 9:55 AM
+ 9:55 AM
+nan
+nan
+ 2:40 PM
+ 6:10 PM
+ 2:40 PM
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+ 2:40 PM
+nan
+ 7:55 AM
+11:00 AM
+nan
+ 5:10 PM
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan
+nan

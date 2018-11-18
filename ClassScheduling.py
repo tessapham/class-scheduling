@@ -159,11 +159,33 @@ def BMCparse():
     studentCap = BMCexcel["Class Cap"]
 
 
-    print "\n\ndaysOfWeek \n {}".format(dayOfWeek)
+    print "\n\ndayOfWeek \n {}".format(dayOfWeek)
     print "\n\nstartTime \n {}".format(startTime)
     print "\n\nendTime \n {}".format(endTime)
     print "\n\nclasses \n {}".format(classes)
     print "\n\nprofessorOfClass \n {}".format(professorOfClass)
+
+    f = open("brynmawr_date.txt","w+")
+    # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
+    for i in dayOfWeek:
+        f.write("{}\n".format(i))
+    f.close()
+
+
+    f = open("brynmawr_startTime.txt","w+")
+    # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
+    for i in startTime:
+        f.write("{}\n".format(i))
+    f.close()
+
+
+    f = open("brynmawr_endTime.txt","w+")
+    # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
+    for i in endTime:
+        f.write("{}\n".format(i))
+    f.close()
+
+    return dayOfWeek, startTime, endTime, classes, professorOfClass
 
 
     # data not availble from excel file
