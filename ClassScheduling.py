@@ -207,34 +207,54 @@ def HCparse():
 
     with open('haverford/haverfordEnrollmentDataS14.csv') as csvfile:
         readCSV = csv.reader(csvfile, delimiter=',')
-        dates = []
-        colors = []
+        dayOfWeek = []
+        startTime = []
+        endTime = []
+        # classes = []
+        professorOfClass = []
+
+        courseID = []
+        subject = []
         for row in readCSV:
             # times = [] has been replaced with following three lists 
-            dayOfWeek = row[18]
-            startTime = row[13]
-            endTime = row[16]
+            dayOfWeek_ = row[18]
+            startTime_ = row[13]
+            endTime_ = row[16]
 
-            classes = row[1]
+            # classes_ = row[1]
 
-            professorOfClass = row[11]
-            # colors.append(color)
+            professorOfClass_ = row[11]
+            
+            dayOfWeek.append(dayOfWeek_)
+            startTime.append(startTime_)
+            endTime.append(endTime_)
+            professorOfClass.append(professorOfClass_)
 
-        print(dayOfWeek[0])
-        # print(colors[0])
+            courseID_ = row[1]
+            subject_ = row[2]
+
+            courseID.append(courseID_)
+            subject.append(subject_)
+        
+
+        notSortedClasses = {}
+        dictClasses = {}
+        for x in range(len(courseID)):
+            notSortedClasses.update( {courseID[x] : subject[x]} )
+
+        keylist = notSortedClasses.keys()
+        keylist.sort()
+        for key in keylist:
+            dictClasses.update( {key : subject[key]} )
+        print dictClasses
 
 
-    # print dayOfWeek
-    # print startTime
-    # print endTime
-    # print classes
-    # print professorOfClass
-
-
-    # data not availble from excel file
-    # students = []
-    # preferences = [] 
-
+        # print(startTime)
+        f = open("haverfordtest.txt","w+")
+        # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
+        for i in dictClasses:
+            f.write("{}\t{}\n".format(i, dictClasses[i]))
+        f.close()
 
 
 
@@ -354,7 +374,7 @@ def main():
     # f.close()
 
     BMCparse()
-    # HCparse()
+    HCparse()
 
     return classesInTime
    
