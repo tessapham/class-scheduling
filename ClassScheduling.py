@@ -43,7 +43,7 @@ This function incurs cheap costs.
 
 # parsing excel
 import os
-import pandas as pd
+import pandas
 import xlrd
 
 
@@ -72,7 +72,7 @@ Arrays we need from parsing: students, preferences, classes
     times = []
     professorOfClass = []
 
-    DSP2 = open("demo_studentprefs.txt", "r") # opens file with name of "test.txt"
+    DSP2 = open("basic/demo_studentprefs.txt", "r") # opens file with name of "test.txt"
     studentInfo = DSP2.read().replace("\t", " ").replace("\n", " ").split(" ")
 
     for i in range(1, int(studentInfo[1]) + 1):
@@ -81,7 +81,7 @@ Arrays we need from parsing: students, preferences, classes
 #    print(students)
 
     # preferences
-    DSP1 = open("demo_studentprefs.txt", "r") # opens file with name of "test.txt"
+    DSP1 = open("basic/demo_studentprefs.txt", "r") # opens file with name of "test.txt"
     preferencesInfo = DSP1.read().replace("\t", " ").replace("\n", " ").split(" ")
 
     temp = []
@@ -104,7 +104,7 @@ Arrays we need from parsing: students, preferences, classes
 
     DSP1.close()
     
-    DC = open("demo_constraints.txt", "r") # opens file with name of "test.txt"
+    DC = open("basic/demo_constraints.txt", "r") # opens file with name of "test.txt"
     splitDemoCon = DC.read().replace("\t", " ").replace("\n", " ").split(" ")
 
     # times
@@ -139,22 +139,47 @@ Arrays we need from parsing: students, preferences, classes
     
     return students, preferences, classes, times, professorOfClass
 
-"""
+
 # parsing for bmc data: 
-def BMCparse(fileName):
+def BMCparse():
+
+    BMCexcel = pandas.read_excel('brynmawr/bmc-data-f17.xls')
+
+    # times = [] has been replaced with following three lists 
+    dayOfWeek = BMCexcel["Days 1"]
+    startTime = BMCexcel["Srt1 AM/PM"]
+    endTime = BMCexcel["End 1 AMPM"]
+
+    classes = BMCexcel["Class Nbr"]
+
+    professorOfClass = BMCexcel["Name"]
+
+    # data not availble from excel file
+
+    # students = []
+    # preferences = [] 
 
 
-    # students = 
-    # preferences =
-    classes = fileName["Class Nbr"]
 
-    times = fileName["Srt1 AM/PM"] + " -" + fileName["End 1 AMPM"]
-    # print times
-    # parse file to build array professorOfClass: go through list of classes from top to bottom, save the professor's name in professorOfClass[c].
-    professorOfClass = fileName["Name"]
+
+# def HCparse(fileName):
+
+
+#     # students = 
+#     # preferences =
+#     classes = fileName["Class Nbr"]
+
+#     dayOfWeek = 
+#     startTime = 
+#     endTime = 
+#     times = fileName["Srt1 AM/PM"] + " -" + fileName["End 1 AMPM"]
+#     # print times
+#     # parse file to build array professorOfClass: go through list of classes from top to bottom, save the professor's name in professorOfClass[c].
+#     professorOfClass = fileName["Name"]
     # print professorOfClass
 
-"""
+
+
 # Another level for constructing the inputs.
 
 def construct(students, preferences, classes, classrooms, sizesOfClassrooms, times):
@@ -240,9 +265,42 @@ def main():
     for c in classes:
         assignClassToTime(c,availableRoomsInTime,professorsInTime,classesInTime,studentsInClass,professorOfClass,times,overlap,classes)
     
-    print(classesInTime)
+    # print("classesInTime: ")
+    # print(classesInTime)
+    # print("professorOfClass: ")
+    # for i in range (0, len(professorOfClass)):
+    # print(professorOfClass)
+    # print("professorOfClass: ")
+    # for i in range (0, len(professorOfClass)):
+    #     print(professorOfClass[i])
+
+    # demo = open("basic/demo_schedule.txt", "r") # opens file with name of "test.txt"
+    # demoP = demo.read().split(" ")
+    # print demoP
+
+    # print classrooms
+
+    # f= open("basic/our_schedule.txt","w+")
+    # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
+    # for i in range(0,len(classes)):
+    #     f.write("{}\t{}\n".format(i+1,classes[i]))
+
+    # f.seek(5)
+    # f.write("\thello\t")
+    
+
+    # f = open("our_schedule.txt","w+")
+    # for i 
+    # f.write(classesInTime)
+
+    # f.close()
+
+    BMCparse()
+
     return classesInTime
    
+
+
 if __name__ == "__main__":
     main()
     
