@@ -154,8 +154,11 @@ def BMCparse():
 
     professorOfClass = BMCexcel["Name"]
 
-    # data not availble from excel file
+    studentCap = BMCexcel["Tot Enrl"]
 
+
+
+    # data not availble from excel file
     # students = []
     # preferences = [] 
 
@@ -164,19 +167,6 @@ def BMCparse():
 
 # def HCparse(fileName):
 
-
-#     # students = 
-#     # preferences =
-#     classes = fileName["Class Nbr"]
-
-#     dayOfWeek = 
-#     startTime = 
-#     endTime = 
-#     times = fileName["Srt1 AM/PM"] + " -" + fileName["End 1 AMPM"]
-#     # print times
-#     # parse file to build array professorOfClass: go through list of classes from top to bottom, save the professor's name in professorOfClass[c].
-#     professorOfClass = fileName["Name"]
-    # print professorOfClass
 
 
 
