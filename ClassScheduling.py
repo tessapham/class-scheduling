@@ -185,6 +185,13 @@ def BMCparse():
         f.write("{}\n".format(i))
     f.close()
 
+    allTime = zip(dayOfWeek, startTime, endTime)
+    f = open("brynmawr_allTimes.txt","w+")
+    # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
+    for i in allTime:
+        f.write("{}\n".format(i))
+    f.close()
+
     return dayOfWeek, startTime, endTime, classes, professorOfClass
 
 
