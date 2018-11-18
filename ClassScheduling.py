@@ -154,18 +154,31 @@ def BMCparse():
 
     professorOfClass = BMCexcel["Name"]
 
+    # no list of students for students = []
+    # instead use this array that is the number of student capacity 
     studentCap = BMCexcel["Class Cap"]
 
-
-
     # data not availble from excel file
-    # students = []
     # preferences = [] 
 
 
 
 
-# def HCparse(fileName):
+def HCparse(fileName):
+    HCexcel = pandas.read_excel('haverford/haverfordEnrollmentDataS14.csv')
+
+    # times = [] has been replaced with following three lists 
+    dayOfWeek = HCexcel["Days 1"]
+    startTime = HCexcel["Srt1 AM/PM"]
+    endTime = HCexcel["End 1 AMPM"]
+
+    classes = HCexcel["Course ID"]
+
+    professorOfClass = HCexcel["Instructor ID"]
+
+    # data not availble from excel file
+    # students = []
+    # preferences = [] 
 
 
 
