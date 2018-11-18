@@ -9,12 +9,11 @@ Created on Fri Nov  2 21:17:46 2018
 
 """
 Structure:
-    
+
 1. Parsing the file
 
-    - parseDemo() function parses the demo data file
+    - parseTXT() function parses the demo data file
         return students, preferences, classes, times, professorOfClass, classrooms, sizes
-        (right now we do not yet have classrooms and sizes file, to be added later)
     - parseExcel() function to be added, to parse the excel data
 
 This function incurs cheap costs.
@@ -23,19 +22,19 @@ This function incurs cheap costs.
 
     - construct(students, preferences, classes)
         return studentsInClass, overlap, classes
-    
-    After we load the data in by either parseDemo() or parseExcel(), we feed the 
+
+    After we load the data in by either parseTXT() or parseExcel(), we feed the
     data into this construct function. The construct function takes inputs:
         students, preferences, classes, classrooms, sizesOfClassrooms, times
     and outputs:
         studentsInClass, overlap, classes, availableRoomsInTime
-        
-    The complexity of this function is O(k log k)+ O(w), which is the complexity to 
+
+    The complexity of this function is O(k log k)+ O(w), which is the complexity to
     process the data
 
 3. Assign the Classes to times
     assignClassToTime(c,availableRoomsInTime,professorsInTime,classesInTime,studentsInClass,professorOfClass,times,overlap,classes)
-    
+
 
 """
 
@@ -43,52 +42,45 @@ This function incurs cheap costs.
 
 # parsing excel
 import os
-import pandas
+import pandas as pd
 import xlrd
-import csv
-
-# write multiple parse functions (for the demo file, for the preference lists of students, etc.) if necessary
+import copy
 
 # parsing for demo data
-def parseDemo():
+def parseTXT():
     '''
-Given a file:
-                Name            Preferred Classes
-                Elizabeth       a, b, c, d
-                Tessa           b, e, f, h
-                Xinyi           c, g, m, n
+Parses the constraints.txt and pref.txt, return roomSize, students, preferences, classes, times, professorOfClass.
+Outputs look like:
+    
+students, ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+classes, [6, 5, 4, 8, 1, 7, 3, 2]
+preferences [[], [7, 4, 2, 8], [2, 3, 4, 1], [4, 6, 5, 3], [3, 1, 7, 2], [5, 1, 3, 4], [7, 8, 2, 3], [5, 1, 2, 8], [2, 6, 8, 7], [2, 1, 3, 7], [3, 6, 4, 2]]
+times ['0', '1', '2', '3']
+roomSize {'1': 876, '2': 815, '3': 232, '4': 101}
+professorOfClass [0, '4', '4', '2', '1', '1', '3', '3', '2']
 
-return students = {Elizabeth, Tessa, Xinyi} 
-preferences = {[a, b, c, d], [b, e, f, h], [c, g, m, n]}.
-Arrays we need from parsing: students, preferences, classes
-    students -  array of all students
-    preferences - array of preference lists of all students (parsed in same order as students)
-    classes - array of all classes, each represented by an integer from 1 to m
-    times - array of all time slots, each represented by an integer from 1 to w
     '''
     students = []
-    preferences = [] 
+    preferences = []
     classes = []
     times = []
     professorOfClass = []
+    roomSize={}
 
-    DSP2 = open("basic/demo_studentprefs.txt", "r") # opens file with name of "test.txt"
-    studentInfo = DSP2.read().replace("\t", " ").replace("\n", " ").split(" ")
 
-    for i in range(1, int(studentInfo[1]) + 1):
-        students.append(str(i))
-#    print("students: ")
-#    print(students)
 
     # preferences
-    DSP1 = open("basic/demo_studentprefs.txt", "r") # opens file with name of "test.txt"
+    DSP1 = open("basic/pref.txt", "r") # opens file with name of "test.txt"
     preferencesInfo = DSP1.read().replace("\t", " ").replace("\n", " ").split(" ")
+ 
+    for i in range(1, int(preferencesInfo[1]) + 1):
+       students.append(str(i))
 
     temp = []
     count = 0
     for i in range (2, len(preferencesInfo)):
         if (count % 5  != 0):
-            temp.append(preferencesInfo[i]) 
+            temp.append(preferencesInfo[i])
         count = count + 1
 
     count2 = 0
@@ -103,20 +95,27 @@ Arrays we need from parsing: students, preferences, classes
             individualPref = []
 
     DSP1.close()
-    
-    DC = open("basic/demo_constraints.txt", "r") # opens file with name of "test.txt"
+
+    DC = open("basic/constraints.txt", "r")
     splitDemoCon = DC.read().replace("\t", " ").replace("\n", " ").split(" ")
 
-    # times
-    for i in range(0, len(splitDemoCon)): 
+    # classes
+    for i in range(0, len(splitDemoCon)):
         if splitDemoCon[i] == "Classes":
             # for j in range(0, int(splitDemoCon[i + 1])):
             for j in range(1, int(splitDemoCon[i + 1]) + 1): # range(1, 15)
-                # print splitDemoCon[j]
-                # classes.append(str(j))
                 classes.append(j) # classes[0..13] will store 1 - 14, same as students above!
-    
-    
+
+    #rooms
+    i=0    
+    while splitDemoCon[i]!="Rooms":
+        i+=1
+    total_number_of_Rooms=int(splitDemoCon[i + 1]) + 1
+    count=0
+    while count<total_number_of_Rooms-1:
+        roomSize[splitDemoCon[i+2]]=int(splitDemoCon[i+3])
+        i+=2
+        count+=1
 
     # times
     for i in range(0, int(splitDemoCon[2])):
@@ -127,156 +126,18 @@ Arrays we need from parsing: students, preferences, classes
     for i in range(0, len(splitDemoCon)):
         if splitDemoCon[i] == "Teachers":
             for j in range(i + 3, len(splitDemoCon), 2):
-                # print splitDemoCon[j]
                 professorOfClass.append(splitDemoCon[j])
-                # professorOfClass[1] should be Teacher 5, but in our way of parsing, professorOfClass[0] = Teacher 5.
- #   print("professorOfClass")
- #   print(professorOfClass)
-
     DC.close()
     ptemp=[[int(u) for u in x] for x in preferences]
     preferences=ptemp
+#parse classrooms and sizesOfClassrooms
     
-    return students, preferences, classes, times, professorOfClass
+
+    return roomSize, students, preferences, classes, times, professorOfClass
 
 
-# parsing for bmc data: 
-def BMCparse():
-
-    BMCexcel = pandas.read_excel('brynmawr/bmc-data-f17.xls')
-
-    # times = [] has been replaced with following three lists 
-    dayOfWeek = BMCexcel["Days 1"]
-    startTime = BMCexcel["Srt1 AM/PM"]
-    endTime = BMCexcel["End 1 AMPM"]
-
-    classes = BMCexcel["Class Nbr"]
-
-    professorOfClass = BMCexcel["Name"]
-
-    # no list of students for students = []
-    # instead use this array that is the number of student capacity 
-    studentCap = BMCexcel["Class Cap"]
-
-
-    print "\n\ndayOfWeek \n {}".format(dayOfWeek)
-    print "\n\nstartTime \n {}".format(startTime)
-    print "\n\nendTime \n {}".format(endTime)
-    print "\n\nclasses \n {}".format(classes)
-    print "\n\nprofessorOfClass \n {}".format(professorOfClass)
-
-    f = open("brynmawr_date.txt","w+")
-    # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
-    for i in dayOfWeek:
-        f.write("{}\n".format(i))
-    f.close()
-
-
-    f = open("brynmawr_startTime.txt","w+")
-    # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
-    for i in startTime:
-        f.write("{}\n".format(i))
-    f.close()
-
-
-    f = open("brynmawr_endTime.txt","w+")
-    # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
-    for i in endTime:
-        f.write("{}\n".format(i))
-    f.close()
-
-    allTime = zip(dayOfWeek, startTime, endTime)
-    f = open("brynmawr_allTimes.txt","w+")
-    # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
-    for i in allTime:
-        f.write("{}\n".format(i))
-    f.close()
-
-    return dayOfWeek, startTime, endTime, classes, professorOfClass
-
-
-    # data not availble from excel file
-    # preferences = [] 
-
-
-
-
-def HCparse():
-    # HCexcel = pandas.read_excel('haverford/haverfordEnrollmentDataS14.csv')
-
-
-    with open('haverford/haverfordEnrollmentDataS14.csv') as csvfile:
-        readCSV = csv.reader(csvfile, delimiter=',')
-        dates = []
-        colors = []
-        for row in readCSV:
-            # times = [] has been replaced with following three lists 
-            dayOfWeek = row[18]
-            startTime = row[13]
-            endTime = row[16]
-
-            classes = row[1]
-
-            professorOfClass = row[11]
-            # colors.append(color)
-
-        print(dayOfWeek[0])
-        # print(colors[0])
-
-
-    # print dayOfWeek
-    # print startTime
-    # print endTime
-    # print classes
-    # print professorOfClass
-
-
-    # data not availble from excel file
-    # students = []
-    # preferences = [] 
-
-
-
-
-# Another level for constructing the inputs.
-
-# parameter: a 3-tupe (daysOfWeek, startTime, endTime). Account for overlapping times.
-def refineTimeList(timeTuples):
-    # remove duplicate times
-    timeTuples = set(timeTuples)
-
-    MWF = [t for t in timeTuples if t[0] in ['M', 'W', 'F', 'MW', 'WF', 'MF', 'MWF']]
-    TTH = [t for t in timeTuples if t[0] in ['T', 'TH', 'TTH']]
-
-    # From here we will use Greedy to classify overlapping times.
-    # sort MWF and TR by start times
-    MWF = sorted(MWF, key = lambda x: x[1])
-    TTH = sorted(TR, key = lambda x: x[1])
-
-    MWFList = []
-    TTHList = []
-
-    i = 0
-    for j in range(1, len(MWF)):
-        # if start time of this slot is earlier than the finish time of the original slot
-        if MWF[j][1] < MWF[i][2]:
-            MWFList[i].append(MWF[j])
-        else:
-            i += 1
-            MWFList[i].append(MWF[j])
-    
-    i = 0
-    for j in range(1, len(TTH)):
-        if TTH[j][1] < TTH[i][2]:
-            TTHList[i]. append(TTH[j])
-        else:
-            i += 1
-            TTHList[i].append(TTH[j])
-    
-    return MWFList, TTHList
-
-
-def construct(students, preferences, classes, classrooms, sizesOfClassrooms, times):
+# The next level for constructing the inputs.
+def construct(students, preferences, classes, roomSize, times):
     # studentsInClass: a dictionary (key = class, value = list of students in that class)
     studentsInClass = {c: [] for c in range(0, 15)}
     studentsInClass.get(0).append(0)
@@ -286,8 +147,8 @@ def construct(students, preferences, classes, classrooms, sizesOfClassrooms, tim
         # for each class c in the preference list of student s
         for c in p:
             # add s to student list of class c
-            if studentsInClass[c] is None:
-                studentsInClass[c] = [s]
+            if studentsInClass[c]==None:
+                studentsInClass[c]=[s]
             else:
                 studentsInClass[c].append(s)
             # increment the overlaps of class c with each class in the rest of list p
@@ -301,17 +162,20 @@ def construct(students, preferences, classes, classrooms, sizesOfClassrooms, tim
     classes = sortedClasses
 
 #sort the classroom from small to big, and pair with their size.
-    sortedClassroom=[(y, x) for x, y in sorted(zip(sizesOfClassrooms, classrooms))]
+#    sortedClassroom=[(y, x) for x, y in sorted(zip(sizesOfClassrooms, classrooms))]
+    
+    sortedClassroom=[(k, roomSize[k]) for k in sorted(roomSize, key=roomSize.get, reverse=False)]
+    
     # availableRoomsInTime: a dictionary (key = time, value = list of tuples (room, size), ranked from smallest to largest)
-    availableRoomsInTime = {t: sortedClassroom for t in times}  
+    availableRoomsInTime = {t: sortedClassroom for t in times}
     return studentsInClass, overlap, classes, availableRoomsInTime
 
 
-def assignClassToTime(c,availableRoomsInTime,professorsInTime,classesInTime,studentsInClass,professorOfClass,times,overlap,classes):
+def assignClassToTime(c,availableRoomsInTime,professorsInTime,classesInTime,studentsInClass,profOfCDict,times,overlap,classes,timeOfClass,classroomOfClass):
     min_overlap = float("inf")
     chosen_time = times[0]
-    
-    prof = professorOfClass[classes.index(c)]
+
+    prof = profOfCDict[c]
 
     for t in times:
         # skip if the professor teaching class c is already teaching another class in this time
@@ -325,124 +189,112 @@ def assignClassToTime(c,availableRoomsInTime,professorsInTime,classesInTime,stud
         # skip if number of students in class c is greater than the size of the biggest available room in time t
         if len(studentsInClass.get(c)) > availableRoomsInTime[t][-1][1]:
             continue
-        
+
         count = 0
-        
+
         for assigned_c in classesInTime[t]:
             count += overlap[c][assigned_c]
-        
+# now you need to do, for assigned_c in classesInTime[t] and classesInTime[ALL SLOTS OVERLAPING WITH T]
+#{TIME_SLOTS: ALL TIME SLOTS OVERLAPPING WITH THIS TIME SLOTS}
+#
+#   def process_time_inputs(day, start_time, end_time):
+#       for i in range(0,len(day))
+#
+
         if count < min_overlap:
             min_overlap = count
             chosen_time = t
-    
+
     # add class c to the chosen time
     classesInTime[chosen_time].append(c)
     # add the professor teaching class c to the list of professors occupied in the chosen time
     professorsInTime[chosen_time].append(prof)
-    # remove the last room from list of available rooms (because they're ranked by size)
-    availableRoomsInTime[chosen_time].pop()
+    temp=copy.deepcopy(availableRoomsInTime[chosen_time])
+    classroomOfClass[c]=temp.pop()[0]
+    availableRoomsInTime[chosen_time]=copy.deepcopy(temp)
+    timeOfClass[c]=chosen_time
+
+
+#this function is for optimality analysis
+def calculate_student_in_class(timeOfClass,classes, students,preferencesDict):
+    studentsTakingClass={}
+    for c in classes:
+        studentsTakingClass[c]=[]
+    for s in students:
+        busyTime=[]
+        wishList=preferencesDict[s]
+        for i in range(0,4):
+            if timeOfClass[wishList[i]] not in busyTime:
+                busyTime.append(timeOfClass[wishList[i]])
+                studentsTakingClass[wishList[i]].append(s)
+            #else, just pass.
+    return studentsTakingClass
+#need to change to a more complicated algorithm to maximize the overal optimality
+# brute force: which class to prioritize to receive the largest # classes out of 4.
+
+
 
 def main():
-    students, preferences, classes, times, professorOfClass = parseDemo()
-    
-    #these two inputs are to be returned by parse() too. 
-    classrooms=[x for x in range(20)]
-    sizesOfClassrooms=[100]*20
-    
-    studentsInClass, overlap, classes, availableRoomsInTime = construct(students, preferences, classes,classrooms, sizesOfClassrooms,times)
-    
-    #Now, ready to assign classes to timeslots. initialize two arrays to store the result first.
+    roomSize, students, preferences, classes, times, professorOfClass = parseTXT()
+    studentsInClass, overlap, classes, availableRoomsInTime = construct(students, preferences, classes,roomSize,times)
+
+#Now, initialize two arrays to store the results.
     # classesInTime: a dictionary (key = time, value = list of classes in that time)
     classesInTime = {t: [] for t in times}
     # professorsInTime: a dictionary (key = time, value = list of professors teaching a class in that time)
     professorsInTime = {t: [] for t in times}
+
+    profOfCDict={}
     for c in classes:
-        assignClassToTime(c,availableRoomsInTime,professorsInTime,classesInTime,studentsInClass,professorOfClass,times,overlap,classes)
+        profOfCDict[c]=professorOfClass[int(c)]
+        
+#below are some reorganization for the outputs
+    classroomOfClass={} #courseID: roomID
+    timeOfClass={} #courseID: timeID
+    for c in classes:
+        assignClassToTime(c,availableRoomsInTime,professorsInTime,classesInTime,studentsInClass,profOfCDict,times,overlap,classes,timeOfClass,classroomOfClass)
+
+    preferencesDict={}
+    for s in students:
+        preferencesDict[s]=preferences[int(s)]
+
+#Now calculate optimality
+
+    studentsTakingClass=calculate_student_in_class(timeOfClass,classes, students,preferencesDict)
+
+    f=open("schedule.txt","w+")
+    f.write("Course"+'\t'+"Room"+'\t'+"Teacher"+'\t'+"Time"+'\t'+"Students"+'\n')
+    for i in range(len(classes)):
+        c=classes[i]
+        f.write(str(c)+'\t'+str(classroomOfClass[c])+'\t'+profOfCDict[c]+'\t'+timeOfClass[c]+'\t'+' '.join(studentsTakingClass[c])+'\n')   
+    with open("schedule.txt") as f:
+        print(f.read())
     
-    # print("classesInTime: ")
-    # print(classesInTime)
-    # print("professorOfClass: ")
-    # for i in range (0, len(professorOfClass)):
-    # print(professorOfClass)
-    # print("professorOfClass: ")
-    # for i in range (0, len(professorOfClass)):
-    #     print(professorOfClass[i])
+    total=0
+    for key in studentsTakingClass:
+        total+=len(studentsTakingClass[key])
+    opt=total/(len(students)*4)
+    print(opt)
 
-    # demo = open("basic/demo_schedule.txt", "r") # opens file with name of "test.txt"
-    # demoP = demo.read().split(" ")
-    # print demoP
-
-    # print classrooms
-
-    # f= open("basic/our_schedule.txt","w+")
-    # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
-    # for i in range(0,len(classes)):
-    #     f.write("{}\t{}\n".format(i+1,classes[i]))
-
-    # f.seek(5)
-    # f.write("\thello\t")
+"""
+    print('\n')
+    print('\n')
+    print("Below are what's returned by parseTXT: "+'\n')
+    print("students,", students)
+    print("classes,", classes)
+    print("preferences", preferences)
+    print("times",times)
+    print("roomSize",roomSize)
+    print("professorOfClass",professorOfClass)
     
+    print('\n'+"OtherThings"+'\n')
+    
+    print("classroomOfClass",classroomOfClass)
+    print("profOfCDict",profOfCDict) #{7: '7', 10: '3'}
+    print("timeOfClass",timeOfClass)
+    print("studentsTakingClass",studentsTakingClass)
+    print(students, '\n','\n', preferences,'\n','\n',classes,'\n','\n',times,'\n','\n',professorOfClass)
 
-    # f = open("our_schedule.txt","w+")
-    # for i 
-    # f.write(classesInTime)
-
-    # f.close()
-
-    BMCparse()
-    # HCparse()
-
-    return classesInTime
-   
-
-
+"""
 if __name__ == "__main__":
     main()
-    
-"""
-for testing, put in main:
-    print(students)
-    print('\n')
-    print(preferences)
-    print('\n')
-    print(classes)
-    print('\n')
-    print(times)
-    print('\n')
-    print(professorOfClass)
-    print(availableRoomsInTime)  
-
-"""
-"""
-To handle the starting element:
-    
-10:48 Fri: an easy way to handle the 0 position is just to have the time id and classes start
-from 0. in reality you're converting the class numbers to numbers from 1 anyways. so why not.
-
-BECAUSE when you keep an 0 in the front, sorting would be a big issue. including when you
-are using zip. 
-
-
-Parsing the Excels part hasn't been tested yet. The current code works for the demo data.
-
-
-"""
-"""
-Lizzy/Tessa's comments in main
-    # call parse methods here if necessary?
-        # parse file to put values into global arrays: students, preferences, classes, times
-    # Retrieve current working directory (`cwd`)
-
-    # --- parsing for BMC data
-
-    # cwd = os.getcwd()
-    # os.chdir("brynmawr")
-    # fileName = 'bmc-÷÷÷÷÷÷÷÷÷≥data-f17.xls'
-    # BMCdata = pd.read_excel(fileName)
-
-    # BMCparse(BMCdata)
-
-    # --- parsing for BMC data
-    
-    
-"""
