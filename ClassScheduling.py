@@ -316,8 +316,8 @@ def construct(students, preferences, classes, roomSize, times, dictClasses):
                 overlap[other_c][c] += 1
 
                 # construct relation between 2 majors
-                relation[c[0]][other_c[0]] += 1
-                relation[other_c[0]][c[0]] += 1
+                relation[dictClasses[c]][dictClasses[other_c]] += 1
+                relation[dictClasses[other_c]][dictClasses[other_c]] += 1
     # the idea is: we want to sort the array classes, but we have to get the size from len(studentsInClass.get(c)) for each c in classes
     sizes = [len(studentsInClass.get(c)) for c in classes]
     # sortedClasses = [x for _, x in sorted(zip(sizes, classes))]
@@ -334,7 +334,7 @@ def construct(students, preferences, classes, roomSize, times, dictClasses):
 
     # CONSTRUCT RELATION BETWEEN EVERY 2 MAJORS
 
-def assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, profOfCDict, times, overlapsWithTime, overlap, classes, timeOfClass, roomOfClass):
+def assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, profOfCDict, times, overlapsWithTime, overlap, classes, timeOfClass, roomOfClass, dictClasses, relation):
     min_overlap = float("inf")
     chosen_time = times[0]
 
@@ -357,13 +357,13 @@ def assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, 
         # {TIME_SLOT: ALL TIME SLOTS OVERLAPPING WITH THIS TIME SLOT}
         count = 0
         for assigned_c in classesInTime[t]:
-            count += overlap[c][assigned_c]
+            count += overlap[c][assigned_c] * relation[dictClasses[c]][dictClasses[assigned_c]]
         
         # account for other classes in overlapping times
         if len(overlapsWithTime[t]) > 0:
             for overlap_t in overlapsWithTime[t]:
                 for assigned_c in classesInTime[overlap_t]:
-                    count += overlap[c][assigned_c]
+                    count += overlap[c][assigned_c] * relation[dictClasses[c]][dictClasses[assigned_c]]
 
         if count < min_overlap:
             min_overlap = count
