@@ -291,7 +291,12 @@ def HCparse():
             subject_ = row[2]
 
             courseID.append(courseID_)
-            subject.append(subject_)
+            subject.append(subject_)   
+        
+        professorOfClass.pop(0)
+        courseID.pop(0)
+        subject.pop(0)
+
 
         dictClasses = {}
         for x in range(len(courseID)):
