@@ -99,7 +99,7 @@ def parseTXT():
 
     DSP1.close()
 
-    DC = open("basic/demo_constraints.txt", "r")
+    DC = open("basic/constraints.txt", "r")
     splitDemoCon = DC.read().replace("\t", " ").replace("\n", " ").split(" ")
 
     # classes
@@ -340,7 +340,7 @@ def getOverlappingTimes(timeTuples):
                 break
     
     for i in range(1, len(TTH) - 1):
-        for j in range(i + 1, len(TTH))
+        for j in range(i + 1, len(TTH)):
             if TTH[j][1] < TTH[i][2]:
                 overlapsWithTime[TTH[i][0]].append(TTH[j][0])
                 overlapsWithTime[TTH[j][0]].append(TTH[i][0])
@@ -460,18 +460,18 @@ def calculateStudentsInClass(timeOfClass, classes, students, preferencesDict):
 
 
 def main():
-    # roomSize, students, preferences, classes, times, professorOfClass = parseTXT()
-    # studentsInClass, overlap, classes, availableRoomsInTime = construct(students, preferences, classes, roomSize, times)
+    roomSize, students, preferences, classes, times, professorOfClass = parseTXT()
+    studentsInClass, overlap, classes, availableRoomsInTime = construct(students, preferences, classes, roomSize, times)
 
     # Now, initialize two arrays to store the results.
     # classesInTime: a dictionary (key = time, value = list of classes in that time)
-    # classesInTime = {t: [] for t in times}
+    classesInTime = {t: [] for t in times}
     # professorsInTime: a dictionary (key = time, value = list of professors teaching a class in that time)
-    # professorsInTime = {t: [] for t in times}
+    professorsInTime = {t: [] for t in times}
 
-    # professorOfClass = {}
-    # for c in classes:
-    #     professorOfClass[c]=professorOfClass[int(c)]
+    professorOfClass = {}
+    for c in classes:
+        professorOfClass[c]=professorOfClass[int(c)]
     profOfCDict = {}
     for c in classes:
         profOfCDict[c] = professorOfClass[int(c)]
