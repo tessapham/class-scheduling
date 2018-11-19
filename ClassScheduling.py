@@ -229,7 +229,7 @@ def BMCparse():
     roomAndSubject = {}
     for x in range(len(subject_)):
         roomAndSubject.update( { classroomID[x]: subject_[x] } )
-    print "roomAndSubject\n {}".format(roomAndSubject)
+    # print "roomAndSubject\n {}".format(roomAndSubject)
 
     sortedSubjectClassroom = {}
     roomOptions = []
@@ -274,17 +274,17 @@ def HCparse():
         subject = []
         for row in readCSV:
             # times = [] has been replaced with following three lists 
-            daysOfWeek_ = row[18]
-            startTime_ = row[13]
-            endTime_ = row[16]
+            # daysOfWeek_ = row[18]
+            # startTime_ = row[13]
+            # endTime_ = row[16]
 
             # classes_ = row[1]
 
             professorOfClass_ = row[11]
             
-            daysOfWeek.append(daysOfWeek_)
-            startTime.append(startTime_)
-            endTime.append(endTime_)
+            # daysOfWeek.append(daysOfWeek_)
+            # startTime.append(startTime_)
+            # endTime.append(endTime_)
             professorOfClass.append(professorOfClass_)
 
             courseID_ = row[1]
@@ -297,12 +297,61 @@ def HCparse():
         for x in range(len(courseID)):
             dictClasses.update( {courseID[x] : subject[x]} )
 
-
-        f = open("haverfordtest.txt","w+")
+        f = open("haverford_dictClasses.txt","w+")
         # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
         for i in dictClasses:
             f.write("{}\t{}\n".format(i, dictClasses[i]))
         f.close()
+
+
+        # populating timeID, daysOfWeek, startTime, endTime arrays
+
+        timeID = []
+        for i in range(1,61):
+            timeID.append(str(i))
+        # print timeID
+
+        HCconstraints = open("haverford/haverfordConstraints.txt", "r")
+        constraints = HCconstraints.read().replace("\t", " ").replace("\r", " ").replace("\n", " ").split(" ")
+
+        constraints = filter(None, constraints)
+        
+        justTimes = []
+        for i in range(4, 363):
+            justTimes.append(constraints[i])
+        # print justTimes
+
+
+        startTime = []
+        endTime = []
+        daysOfWeek = []
+
+        count = 0
+        for i in range (len(justTimes)):
+            if count % 6 == 0:
+                startTime.append(justTimes[i]+""+justTimes[i+1])
+            count = count + 1
+        count = 0
+        for i in range (2, len(justTimes)):
+            if count % 6 == 0:
+                endTime.append(justTimes[i]+""+justTimes[i+1])
+            count = count + 1
+        count = 0
+        for i in range (4, len(justTimes)):
+            if count % 6 == 0:
+                daysOfWeek.append(justTimes[i])
+            count = count + 1
+
+
+        f = open("haverford_times.txt","w+")
+        # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
+        for i in range(len(startTime)):
+            f.write("{}\t{}\t{}\n".format(startTime[i], endTime[i], daysOfWeek[i]))
+        f.close()
+
+        # print startTime
+
+
         return daysOfWeek, startTime, endTime, professorOfClass, dictClasses
 
 # Convert times to 24-hour format (for comparison).
@@ -460,36 +509,36 @@ def calculateStudentsInClass(timeOfClass, classes, students, preferencesDict):
 
 
 def main():
-    roomSize, students, preferences, classes, times, professorOfClass = parseTXT()
-    studentsInClass, overlap, classes, availableRoomsInTime = construct(students, preferences, classes, roomSize, times)
+    # roomSize, students, preferences, classes, times, professorOfClass = parseTXT()
+    # studentsInClass, overlap, classes, availableRoomsInTime = construct(students, preferences, classes, roomSize, times)
 
-    # Now, initialize two arrays to store the results.
-    # classesInTime: a dictionary (key = time, value = list of classes in that time)
-    classesInTime = {t: [] for t in times}
-    # professorsInTime: a dictionary (key = time, value = list of professors teaching a class in that time)
-    professorsInTime = {t: [] for t in times}
+    # # Now, initialize two arrays to store the results.
+    # # classesInTime: a dictionary (key = time, value = list of classes in that time)
+    # classesInTime = {t: [] for t in times}
+    # # professorsInTime: a dictionary (key = time, value = list of professors teaching a class in that time)
+    # professorsInTime = {t: [] for t in times}
 
-    professorOfClass = {}
-    for c in classes:
-        professorOfClass[c]=professorOfClass[int(c)]
-    profOfCDict = {}
-    for c in classes:
-        profOfCDict[c] = professorOfClass[int(c)]
-        
-    # Below are some reorganization for the outputs.
-    roomOfClass = {} #courseID: roomID
-    timeOfClass = {} #courseID: timeID
+    # professorOfClass = {}
     # for c in classes:
-    #     assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, professorOfClass, times, overlap, classes, timeOfClass, roomOfClass)
+    #     professorOfClass[c]=professorOfClass[int(c)]
+    # profOfCDict = {}
+    # for c in classes:
+    #     profOfCDict[c] = professorOfClass[int(c)]
+        
+    # # Below are some reorganization for the outputs.
+    # roomOfClass = {} #courseID: roomID
+    # timeOfClass = {} #courseID: timeID
+    # # for c in classes:
+    # #     assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, professorOfClass, times, overlap, classes, timeOfClass, roomOfClass)
 
-    BMCparse()
+    # BMCparse()
     HCparse()
     
     # preferencesDict = {}
     # for s in students:
     #     preferencesDict[s] = preferences[int(s)]
-    for c in classes:
-        assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, profOfCDict, times, overlap, classes, timeOfClass, roomOfClass)
+    # for c in classes:
+    #     assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, profOfCDict, times, overlap, classes, timeOfClass, roomOfClass)
     
     # BMCparse()
 
@@ -503,9 +552,9 @@ def main():
     overlapsWithTime = getOverlappingTimes(timeTuples)
     """
 
-    preferencesDict = {}
-    for s in students:
-        preferencesDict[s] = preferences[int(s)]
+    # preferencesDict = {}
+    # for s in students:
+    #     preferencesDict[s] = preferences[int(s)]
 
     # Now calculate optimality.
 
@@ -518,13 +567,15 @@ def main():
     #     f.write(str(c)+'\t'+str(roomOfClass[c])+'\t'+professorOfClass[c]+'\t'+timeOfClass[c]+'\t'+' '.join(studentsTakingClass[c])+'\n')   
     # with open("schedule.txt") as f:
     #     print(f.read())
-    f = open("schedule.txt", "w+")
-    f.write("Course" + '\t' + "Room" + '\t' + "Teacher" + '\t' + "Time" + '\t' + "Students" + '\n')
-    for i in range(len(classes)):
-        c = classes[i]
-        f.write(str(c) + '\t' + str(roomOfClass[c]) + '\t' + professorOfClass[c] + '\t' + timeOfClass[c] + '\t' + ' '.join(studentsTakingClass[c]) + '\n')  
-    with open("schedule.txt") as f:
-        print(f.read())
+
+
+    # f = open("schedule.txt", "w+")
+    # f.write("Course" + '\t' + "Room" + '\t' + "Teacher" + '\t' + "Time" + '\t' + "Students" + '\n')
+    # for i in range(len(classes)):
+    #     c = classes[i]
+    #     f.write(str(c) + '\t' + str(roomOfClass[c]) + '\t' + professorOfClass[c] + '\t' + timeOfClass[c] + '\t' + ' '.join(studentsTakingClass[c]) + '\n')  
+    # with open("schedule.txt") as f:
+    #     print(f.read())
     
     # total = 0
     # for key in studentsTakingClass:
