@@ -45,23 +45,26 @@ import xlrd
 import copy
 import csv
 import datetime
+import math
+import numpy as np
+
 
 # write multiple parse functions (for the demo file, for the preference lists of students, etc.) if necessary
 
 # parsing for demo data
 def parseTXT():
-'''
-Parses the constraints.txt and pref.txt, return roomSize, students, preferences, classes, times, professorOfClass.
-Outputs look like:
-    
-students: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
-classes: [6, 5, 4, 8, 1, 7, 3, 2]
-preferences: [[], [7, 4, 2, 8], [2, 3, 4, 1], [4, 6, 5, 3], [3, 1, 7, 2], [5, 1, 3, 4], [7, 8, 2, 3], [5, 1, 2, 8], [2, 6, 8, 7], [2, 1, 3, 7], [3, 6, 4, 2]]
-times: ['0', '1', '2', '3']
-roomSize:{'1': 876, '2': 815, '3': 232, '4': 101}
-professorOfClass: [0, '4', '4', '2', '1', '1', '3', '3', '2']
+    '''
+    Parses the constraints.txt and pref.txt, return roomSize, students, preferences, classes, times, professorOfClass.
+    Outputs look like:
+        
+    students: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+    classes: [6, 5, 4, 8, 1, 7, 3, 2]
+    preferences: [[], [7, 4, 2, 8], [2, 3, 4, 1], [4, 6, 5, 3], [3, 1, 7, 2], [5, 1, 3, 4], [7, 8, 2, 3], [5, 1, 2, 8], [2, 6, 8, 7], [2, 1, 3, 7], [3, 6, 4, 2]]
+    times: ['0', '1', '2', '3']
+    roomSize:{'1': 876, '2': 815, '3': 232, '4': 101}
+    professorOfClass: [0, '4', '4', '2', '1', '1', '3', '3', '2']
 
-'''
+    '''
     students = []
     preferences = []
     classes = []
@@ -70,7 +73,7 @@ professorOfClass: [0, '4', '4', '2', '1', '1', '3', '3', '2']
     roomSize = {}
 
     # preferences
-    DSP1 = open("basic/pref.txt", "r") # opens file with name of "test.txt"
+    DSP1 = open("basic/pref.txt", "r") 
     preferencesInfo = DSP1.read().replace("\t", " ").replace("\n", " ").split(" ")
  
     for i in range(1, int(preferencesInfo[1]) + 1):
@@ -135,10 +138,12 @@ professorOfClass: [0, '4', '4', '2', '1', '1', '3', '3', '2']
 
 
 # parsing for bmc data:
+def is_nan(x):
+    return (x is np.nan or x != x)
 
 def BMCparse():
 
-    BMCexcel = pandas.read_excel('brynmawr/bmc-data-f17.xls')
+    BMCexcel = pd.read_excel('brynmawr/bmc-data-f17.xls')
 
     # times = [] has been replaced with following three lists 
     daysOfWeek = BMCexcel["Days 1"]
@@ -186,7 +191,67 @@ def BMCparse():
     for i in allTime:
         f.write("{}\n".format(i))
     f.close()
-    return daysOfWeek, startTime, endTime, classes, professorOfClass
+
+
+
+    # for Xinyi
+    # from original excel file 
+    subject = BMCexcel["Subject"]
+    classSubject = {}
+    for x in range(len(classes)):
+        classSubject.update( {classes[x] : subject[x]} )
+
+
+
+    # new excel file made by Xinyi
+    BMCclassroom = pd.read_excel('brynmawr/bmc-classroom-data-f17.xlsx')
+
+    # times = [] has been replaced with following three lists 
+    subject_ = BMCclassroom["Subject"]
+    classroomID = BMCclassroom["Facil ID 1"]
+    classroomCap = BMCclassroom["Room Capacity"]
+    # print classroomCap
+
+    roomSize = {}
+    for x in range(len(classroomID)):
+        roomSize.update( {classroomID[x] : classroomCap[x]} )
+    # print roomSize
+
+    f = open("brynmawr_roomSize.txt","w+")
+    for i in roomSize:
+        f.write("{}\t{}\n".format(i, roomSize[i]))
+    f.close()
+    # print roomSize
+
+    roomAndSubject = {}
+    for x in range(len(subject_)):
+        roomAndSubject.update( { classroomID[x]: subject_[x] } )
+    print "roomAndSubject\n {}".format(roomAndSubject)
+
+    sortedSubjectClassroom = {}
+    roomOptions = []
+    for x in range(len(subject_)):
+        # if subject_[x] in sortedSubjectClassroom and classroomID[x] not in sortedSubjectClassroom[subject_[x]]:
+        if subject_[x] in sortedSubjectClassroom:
+            if classroomID[x] not in sortedSubjectClassroom[subject_[x]] and is_nan(classroomID[x]) == False:
+                sortedSubjectClassroom[subject_[x]].append(classroomID[x])
+        else:
+            sortedSubjectClassroom.update( {subject_[x] : [classroomID[x]]} )
+
+    sortedSubjectClassroom["SOWK"].pop(0)
+    del sortedSubjectClassroom["VILLANOV"]
+    print sortedSubjectClassroom
+
+    f = open("brynmawr_sortedSubjectClassroom.txt","w+")
+    for i in sortedSubjectClassroom:
+        f.write("{}\t{}\n".format(i, sortedSubjectClassroom[i]))
+    f.close()
+
+
+
+
+    return daysOfWeek, startTime, endTime, classes, professorOfClass, classSubject, roomSize, sortedSubjectClassroom
+
 
 
     # data not availble from excel file
@@ -227,19 +292,11 @@ def HCparse():
             subject.append(subject_)
         
 
-        notSortedClasses = {}
         dictClasses = {}
         for x in range(len(courseID)):
-            notSortedClasses.update( {courseID[x] : subject[x]} )
-
-        keylist = notSortedClasses.keys()
-        keylist.sort()
-        for key in keylist:
-            dictClasses.update( {key : subject[key]} )
-        print dictClasses
+            dictClasses.update( {courseID[x] : subject[x]} )
 
 
-        # print(startTime)
         f = open("haverfordtest.txt","w+")
         # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
         for i in dictClasses:
@@ -406,49 +463,49 @@ def calculateStudentsInClass(timeOfClass, classes, students, preferencesDict):
 
 
 def main():
-    roomSize, students, preferences, classes, times, professorOfClass = parseTXT()
-    studentsInClass, overlap, classes, availableRoomsInTime = construct(students, preferences, classes, roomSize, times)
+    # roomSize, students, preferences, classes, times, professorOfClass = parseTXT()
+    # studentsInClass, overlap, classes, availableRoomsInTime = construct(students, preferences, classes, roomSize, times)
 
 #Now, initialize two arrays to store the results.
     # classesInTime: a dictionary (key = time, value = list of classes in that time)
-    classesInTime = {t: [] for t in times}
+    # classesInTime = {t: [] for t in times}
     # professorsInTime: a dictionary (key = time, value = list of professors teaching a class in that time)
-    professorsInTime = {t: [] for t in times}
+    # professorsInTime = {t: [] for t in times}
 
-    professorOfClass = {}
-    for c in classes:
-        professorOfClass[c]=professorOfClass[int(c)]
+    # professorOfClass = {}
+    # for c in classes:
+    #     professorOfClass[c]=professorOfClass[int(c)]
         
 # below are some reorganization for the outputs
     roomOfClass = {} #courseID: roomID
     timeOfClass = {} #courseID: timeID
-    for c in classes:
-        assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, professorOfClass, times, overlap, classes, timeOfClass, roomOfClass)
+    # for c in classes:
+    #     assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, professorOfClass, times, overlap, classes, timeOfClass, roomOfClass)
 
     BMCparse()
     HCparse()
     
-    preferencesDict = {}
-    for s in students:
-        preferencesDict[s] = preferences[int(s)]
+    # preferencesDict = {}
+    # for s in students:
+    #     preferencesDict[s] = preferences[int(s)]
 
 # Now calculate optimality.
 
-    studentsTakingClass = calculateStudentsInClass(timeOfClass, classes, students, preferencesDict)
+    # studentsTakingClass = calculateStudentsInClass(timeOfClass, classes, students, preferencesDict)
 
-    f = open("schedule.txt", "w+")
-    f.write("Course" + '\t' + "Room" + '\t' + "Teacher" + '\t' + "Time" + '\t' + "Students" + '\n')
-    for i in range(len(classes)):
-        c = classes[i]
-        f.write(str(c)+'\t'+str(roomOfClass[c])+'\t'+professorOfClass[c]+'\t'+timeOfClass[c]+'\t'+' '.join(studentsTakingClass[c])+'\n')   
-    with open("schedule.txt") as f:
-        print(f.read())
+    # f = open("schedule.txt", "w+")
+    # f.write("Course" + '\t' + "Room" + '\t' + "Teacher" + '\t' + "Time" + '\t' + "Students" + '\n')
+    # for i in range(len(classes)):
+    #     c = classes[i]
+    #     f.write(str(c)+'\t'+str(roomOfClass[c])+'\t'+professorOfClass[c]+'\t'+timeOfClass[c]+'\t'+' '.join(studentsTakingClass[c])+'\n')   
+    # with open("schedule.txt") as f:
+    #     print(f.read())
     
-    total = 0
-    for key in studentsTakingClass:
-        total += len(studentsTakingClass[key])
-    opt = total / (len(students) * 4)
-    print(opt)
+    # total = 0
+    # for key in studentsTakingClass:
+    #     total += len(studentsTakingClass[key])
+    # opt = total / (len(students) * 4)
+    # print(opt)
 
 """
     print('\n')
