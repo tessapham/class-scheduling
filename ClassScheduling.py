@@ -299,7 +299,7 @@ def construct(students, preferences, classes, roomSize, times, dictClasses):
     overlap = [[0 for c in classes] for c in classes]
 
     subjects = set(list(dictClasses.keys()))
-    relation = [[0 for s in subjects] for s in subjects]
+    relation = [[1 for s in subjects] for s in subjects]
 
     for s, p in zip(students, preferences):
         # for each class c in the preference list of student s
@@ -331,8 +331,6 @@ def construct(students, preferences, classes, roomSize, times, dictClasses):
     # availableRoomsInTime: a dictionary (key = time, value = list of tuples (room, size), ranked from smallest to largest)
     availableRoomsInTime = {t: sortedClassroom for t in times}
     return studentsInClass, overlap, classes, availableRoomsInTime
-
-    # CONSTRUCT RELATION BETWEEN EVERY 2 MAJORS
 
 def assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, profOfCDict, times, overlapsWithTime, overlap, classes, timeOfClass, roomOfClass, dictClasses, relation):
     min_overlap = float("inf")
