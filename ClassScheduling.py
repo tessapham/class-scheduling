@@ -201,7 +201,10 @@ def BMCparse():
     for x in range(len(classes)):
         classSubject.update( {classes[x] : subject[x]} )
 
-
+    f = open("brynmawr_classSubject.txt","w+")
+    for i in classSubject:
+        f.write("{}\t{}\n".format(i, classSubject[i]))
+    f.close()
 
     # new excel file made by Xinyi
     BMCclassroom = pd.read_excel('brynmawr/bmc-classroom-data-f17.xlsx')
