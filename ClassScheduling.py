@@ -233,7 +233,7 @@ def BMCparse():
                 toAppend = tuple((classroomID[x], roomSize[classroomID[x]]))
                 sortedSubjectClassroom[subject_[x]].append(toAppend)
         else:
-            toAppend = tuple((classroomID[x], roomSize[classroomID[x]]))
+            toAppend = tuple((classroomID[x], roomSize[classroomID[x]])) 
             sortedSubjectClassroom.update({subject_[x] : [toAppend]})
 
     sortedSubjectClassroom["SOWK"].pop(0)
@@ -241,7 +241,7 @@ def BMCparse():
     # print(sortedSubjectClassroom)
 
     for k in sortedSubjectClassroom:
-        print sortedSubjectClassroom[k].sort(key=lambda tup: tup[1], reverse=True)
+        sortedSubjectClassroom[k].sort(key=lambda tup: tup[1], reverse=True)
 
     f = open("brynmawr_sortedSubjectClassroom.txt","w+")
     for i in sortedSubjectClassroom:
@@ -282,37 +282,16 @@ def BMCparse():
     '''
 
 def HCparse():
-    # HCexcel = pandas.read_excel('haverford/haverfordEnrollmentDataS14.csv')
 
+    professorOfClass = []
     with open('haverford/haverfordEnrollmentDataS14.csv') as csvfile:
         readCSV = csv.reader(csvfile, delimiter = ',')
-
-        professorOfClass = []
-        courseID = []
-        subject = []
         for row in readCSV:
             professorOfClass_ = row[11]
-            courseID_ = row[1]
-            subject_ = row[2]
-
             professorOfClass.append(professorOfClass_)
-            courseID.append(courseID_)
-            subject.append(subject_)   
-        
+     
         professorOfClass.pop(0)
-        courseID.pop(0)
-        subject.pop(0)
-
-
-        dictClasses = {}
-        for x in range(len(courseID)):
-            dictClasses.update({courseID[x] : subject[x]})
-
-        f = open("haverford_dictClasses.txt","w+")
-        # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
-        for i in dictClasses:
-            f.write("{}\t{}\n".format(i, dictClasses[i]))
-        f.close()
+        
 
         # populating arrays from haverfordConstraints.txt file and haverfordConstraints_withZerios.txt file 
 
@@ -370,13 +349,13 @@ def HCparse():
             justRooms.append(constraints[i])
         # print justRooms
 
-        roomSizeName = []
-        roomSizeCap = []
+        classroomID_fromtxt = []
+        classroomCap = []
         roomSize = {}
         count = 0 
         for i in range (len(justRooms)):
             if count % 2 == 0:
-                roomSizeName.append(justRooms[i])
+                classroomID_fromtxt.append(justRooms[i])
             count = count + 1; 
 
         # print roomSizeName
@@ -384,12 +363,12 @@ def HCparse():
         count = 0
         for i in range (1, len(justRooms)):
             if count % 2 == 0:
-                roomSizeCap.append(justRooms[i])
+                classroomCap.append(justRooms[i])
             count = count + 1; 
 
         # print roomSizeCap
 
-        roomSize = dict(zip(roomSizeName, roomSizeCap))
+        roomSize = dict(zip(classroomID_fromtxt, classroomCap))
 
         f = open("haverford_roomSize.txt","w+")
         # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
@@ -453,11 +432,13 @@ def HCparse():
             studentNumber.append(temp[0])
 
         student_pref = []
+
         for i in range(len(studentNumber)):
             temp = studentprefs[i].split(' ', 1)
             individualPrefs = temp[1].split(" ")
             individualPrefs.pop(-1)
             student_pref.append(individualPrefs)
+        print student_pref[0]
 
         studentPreferences = dict(zip(studentNumber, student_pref))
 
@@ -468,14 +449,67 @@ def HCparse():
         f.close()
 
 
+
+        courseID = []
+        subject = []
+        classroomID = []
+
+        # new excel file made by Xinyi
+        with open('haverford/haverford-classroom-data.csv') as csvfile:
+            readHC = csv.reader(csvfile, delimiter = ',')
+
+            for row in readHC:
+                courseID_ = row[0]
+                subject_ = row[1]
+                classroomID_ = row[2]
+
+                courseID.append(courseID_)
+                subject.append(subject_)
+                classroomID.append(classroomID_)
+
+            courseID.pop(0)
+            subject.pop(0)
+            classroomID.pop(0)
+
+        print classroomID 
+        
+        classSubject = {}
+        for x in range(len(courseID)):
+            classSubject.update( {courseID[x] : subject[x]} )
+
+        f = open("haverford_classSubject.txt","w+")
+        for i in classSubject:
+            f.write("{}\t{}\n".format(i, classSubject[i]))
+        f.close()
+
+        roomAndSubject = {}
+        for x in range(len(subject)):
+            roomAndSubject.update( { classroomID[x]: subject[x] } )
+
+        sortedSubjectClassroom = {}
+        roomOptions = []
+        for x in range(len(subject)):
+            if subject[x] in sortedSubjectClassroom:
+                if classroomID[x] not in sortedSubjectClassroom[subject[x]] and is_nan(classroomID[x]) == False:
+                    if tuple((classroomID[x], roomSize[classroomID[x]])) not in sortedSubjectClassroom[subject[x]]: 
+                        toAppend = tuple((classroomID[x], roomSize[classroomID[x]]))
+                        sortedSubjectClassroom[subject[x]].append(toAppend)
+            else:
+                toAppend = tuple((classroomID[x], roomSize[classroomID[x]])) 
+                sortedSubjectClassroom.update({subject[x] : [toAppend]})
+
+        for k in sortedSubjectClassroom:
+            sortedSubjectClassroom[k].sort(key=lambda tup: tup[1], reverse=True)
+
+        f = open("haverford_sortedSubjectClassroom.txt","w+")
+        for i in sortedSubjectClassroom:
+            f.write("{}\t{}\n".format(i, sortedSubjectClassroom[i]))
+        f.close()
+
+
         # overview of all arrays created in this function
         '''
         **see txt files with [college]_[name of data structure].txt for external version of parsed data
-
-        !!following from excel file 
-        professorOfClass = [] - list of professors
-        courseID = [] - list of courseIDs
-        subject = [] - list of subjects
 
         !!following are from haverfordConstraints file 
 
@@ -485,8 +519,8 @@ def HCparse():
         daysOfWeek = [] - list of the days the times are scheduled for
         timeTupes = [] - a list of tuples of all this data meshed into one 
 
-        roomSizeName = [] - list of room names 
-        roomSizeCap = [] - list of room size capacity 
+        classroomID_fromtxt = [] - list of room names specifically from haverfordConstraints file
+        classroomCap = [] - list of room size capacity 
         roomSize = {} - dictionary of roomSizeName:roomSizeCap
 
         !!following are parsed from other haverfordfile (haverfordConstraints_withZeros) in which i filled in zeros for when there isn't a corresponding teacherID for a particular classID
@@ -500,6 +534,15 @@ def HCparse():
         studentNumber = [] - list of student ID numbers
         student_pref = [] - list of student preferences 
         studentPreferences = {} - dictionary of studentNumber:student_pref ie a students ID number and their corresponding list of classID preferences
+
+        !!following are parsed from haverford-classroom-data.csv
+        courseID = [] - list of IDs for each course
+        subject = [] - list of subjects
+        classroomID = [] = list of the IDs for each classroom 
+        classSubject = {} - dictionary of courseID:subject
+
+        roomAndSubject = {} - dictionary of classroomID:subject
+        sortedSubjectClassroom = {} - dictionary of subject_:[list of tuples that store (classroomID, classroomCap) that are availble for that key/subject] where the items in the second part of the tuple, meaning the classroomIDs, are sorted in order of LARGEST cap room to SMALLEST cap room
         '''
 
 
