@@ -250,6 +250,33 @@ def BMCparse():
     # data not availble from excel file
     # preferences = [] 
 
+    # overview of all arrays created in this function
+    '''
+    **see txt files with [college]_[name of data structure].txt for external version of parsed data
+
+    !!following are parsed from bmc-data-f17.xls file
+    daysOfWeek = [] - list of days a timeslot is run 
+    startTime = [] - list of start times 
+    endTime = [] - list of end times
+    allTime = {} - previous three lists correspond to one another and are all formatted in this data structure 
+
+    classes = [] - list of classes
+    professorOfClass = [] - list of professors
+    studentCap = [] - student capacity 
+
+    subject = [] - list of subjects 
+    classSubject = {} - dictionary of classes:subject
+
+    !!following are parsed from bmc-classroom-data-f17.xlsx file
+    subject_ = [] - list of subjects
+    classroomID = [] - list of classroom IDs
+    classroomCap = [] - list of capacities for each clasroom
+
+    roomSize = {} - dictionary of classroomID:classroomCap
+    roomAndSubject = {} - dictionary of classroomID:subject_
+    sortedSubjectClassroom = {} - dictionary of sorted subject_:[list of availble classrooms for that subject] organized by room capacity from LARGEST cap to SMALLEST cap
+    '''
+
 def HCparse():
     # HCexcel = pandas.read_excel('haverford/haverfordEnrollmentDataS14.csv')
 
@@ -443,6 +470,7 @@ def HCparse():
 
         # overview of all arrays created in this function
         '''
+        **see txt files with [college]_[name of data structure].txt for external version of parsed data
 
         !!following from excel file 
         professorOfClass = [] - list of professors
