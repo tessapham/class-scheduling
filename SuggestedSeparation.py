@@ -288,6 +288,7 @@ def assignClassToTime(c,availableRoomsInTime,professorsInTime,classesInTime,stud
     timeOfClass[c]=chosen_time
     temp=copy.deepcopy(availableRoomsInTime[chosen_time])
     classroomOfClass[c]=temp.pop()[0]
+    # classroomOfClass[c] = availableRoomsInTime[chosen_time].pop()[0]
     availableRoomsInTime[chosen_time]=copy.deepcopy(temp)
     
 
