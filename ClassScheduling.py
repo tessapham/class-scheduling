@@ -442,29 +442,26 @@ def HCparse():
 
         studentprefs.pop(0)
 
-        students = []
+        studentNumber = []
         for i in range(len(studentprefs)-1):
             temp = studentprefs[i].split(' ', 1)
-            students.append(temp[0])
+            studentNumber.append(temp[0])
 
         preferences = []
-        for i in range(len(students)):
+        student_pref = []
+        for i in range(len(studentNumber)):
             temp = studentprefs[i].split(' ', 1)
             individualPrefs = temp[1].split(" ")
             individualPrefs.pop(-1)
-<<<<<<< HEAD
             student_pref.append(individualPrefs)
         # print student_pref[0]
 
         studentPreferences = dict(zip(studentNumber, student_pref))
-=======
-            preferences.append(individualPrefs)
->>>>>>> 0afc701b9b0490602a20f459a58861ea39b2d4bd
 
-        preferencesDict = dict(zip(students, preferences))
+        preferencesDict = dict(zip(studentNumber, preferences))
 
         f = open("haverford_studentPreferences.txt","w+")
-        for i in students:
+        for i in studentNumber:
             f.write("{}\t{}\n".format(i, preferencesDict[i]))
         f.close()
 
