@@ -303,6 +303,7 @@ def HCparse():
             timeID.append(str(i))
         # print timeID
 
+        # HCconstraints = open("haverford/newConstraints.txt", "r")
         HCconstraints = open("haverford/haverfordConstraints.txt", "r")
         constraints = HCconstraints.read().replace("\t", " ").replace("\r", " ").replace("\n", " ").split(" ")
 
@@ -329,7 +330,7 @@ def HCparse():
                 endTime.append(justTimes[i]+""+justTimes[i+1])
             count = count + 1
 
-#        print endTime
+        # print endTime
         
         count = 0
         for i in range (4, len(justTimes)):
@@ -424,6 +425,7 @@ def HCparse():
 
         HCconstraintsEnd.close()
         
+        # HCstudentprefs = open("haverford/newPrefs.txt", "r")
         HCstudentprefs = open("haverford/haverfordStudentPrefs.txt", "r")
         studentprefs = HCstudentprefs.read().replace("\t", " ").replace("\r", " ").split('\n')
 
@@ -489,7 +491,8 @@ def HCparse():
         for x in range(len(subject)):
             if subject[x] in sortedSubjectClassroom:
                 if classroomID[x] not in sortedSubjectClassroom[subject[x]] and is_nan(classroomID[x]) == False:
-                    if tuple((classroomID[x], roomSize[classroomID[x]])) not in sortedSubjectClassroom[subject[x]]: 
+                    if tuple((classroomID[x], roomSize[classroomID[x]])) not in sortedSubjectClassroom[subject[x]]:
+                        # print(classroomID[x], roomSize[classroomID[x]])
                         toAppend = tuple((classroomID[x], roomSize[classroomID[x]]))
                         sortedSubjectClassroom[subject[x]].append(toAppend)
             else:
@@ -708,13 +711,12 @@ def assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, 
     availableRoomsInTime[chosen_time] = copy.deepcopy(temp)
     timeOfClass[c] = chosen_time
     
- """   
-    
+ """
     
 def assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, \
                           profOfCDict, times, overlap, classes, timeOfClass, roomSize, roomOfClass, \
                           classSubject, sortedSubjectClassroom, overlapsWithTime, relation, \
-                          overlapTimeMode = False, relationMode = False, subjectClassroomMode=False):
+                          overlapTimeMode = False, relationMode = False, subjectClassroomMode = False):
     min_overlap = float("inf")
     chosen_time = times[0]
 
@@ -736,7 +738,7 @@ def assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, 
 # skip if no more available rooms or if number of students in class c is greater 
 # than the size of the biggest available room in time t
         if (subjectClassroomMode):
-            #print("Processing things in subjectClassroomMode.\n")
+            # print("Processing things in subjectClassroomMode.\n")
             stop=False
             i=0
             lenClassroom=len(sortedSubjectClassroom[subject]) #so you want it small to big
@@ -747,7 +749,7 @@ def assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, 
                         stop=True
                         tooSmall=False
                     else:
-                        i+=1 #this room is taken, try next one
+                        i += 1 # this room is taken, try next one
                 else:
                     stop=True
                     tooSmall=True  #it means that even the biggest subject-legit classroom's not big enough               
@@ -805,11 +807,6 @@ def assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, 
     availableRoomsInTime[chosen_time] = copy.deepcopy(temp)
     timeOfClass[c] = chosen_time
 
-    
-    
-    
-    
-
 # This function is for optimality analysis.
 def calculateStudentsInClass(timeOfClass, classes, students, preferencesDict):
     studentsTakingClass = {}
@@ -821,14 +818,17 @@ def calculateStudentsInClass(timeOfClass, classes, students, preferencesDict):
         wishList = preferencesDict[s]
         # for i in range(0,4):
         for c in wishList:
-            if c in classes:
-                # if timeOfClass[wishList[i]] not in busyTime:
-                if timeOfClass[c] not in busyTime:
-                    # busyTime.append(timeOfClass[wishList[i]])
-                    busyTime.append(timeOfClass[c])
-                    # studentsTakingClass[wishList[i]].append(s)
-                    studentsTakingClass[c].append(s)
+            try:
+                if c in classes:
+                    # if timeOfClass[wishList[i]] not in busyTime:
+                    if timeOfClass[c] not in busyTime:
+                        # busyTime.append(timeOfClass[wishList[i]])
+                        busyTime.append(timeOfClass[c])
+                        # studentsTakingClass[wishList[i]].append(s)
+                        studentsTakingClass[c].append(s)
             # else, just pass
+            except KeyError:
+                continue
     return studentsTakingClass
 # need to change to a more complicated algorithm to maximize the overall optimality
 # brute force: which class to prioritize to receive the largest # classes out of 4.
@@ -886,7 +886,14 @@ def mainHC(overlapTimeMode = False, relationMode = False, subjectClassroomMode=F
     overlapsWithTime = getOverlappingTimes(timeTuples)
     studentsInClass, overlap, classes, availableRoomsInTime, relation = construct(students, preferences, classID, roomSize, times, classSubject, relationMode = relationMode)
     # studentsInClass, overlap, classes, availableRoomsInTime, relation = construct(students, preferences, classID, roomSize, timeID, classSubject, relationMode = True)
+    """
+    print(len(classSubject))
     
+    timeTuples = list(zip(timeID, startTime, endTime, daysOfWeek))
+    overlapsWithTime = getOverlappingTimes(timeTuples)
+    # studentsInClass, overlap, classes, availableRoomsInTime, relation = construct(students, preferences, classID, roomSize, timeID, classSubject, relationMode = False)
+    studentsInClass, overlap, classes, availableRoomsInTime, relation = construct(students, preferences, classID, roomSize, timeID, classSubject, relationMode = True)
+    """
     # Now, initialize two arrays to store the results.
     # classesInTime:  a dictionary (key = time, value = list of classes in that time)
     classesInTime = {t: [] for t in times}
@@ -902,10 +909,13 @@ def mainHC(overlapTimeMode = False, relationMode = False, subjectClassroomMode=F
     timeOfClass = {} # courseID: timeID
     
     for c in classes:
-        assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, \
+        try:
+            assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, \
                           profOfCDict, times, overlap, classes, timeOfClass, roomSize, roomOfClass, \
                           classSubject, sortedSubjectClassroom, overlapsWithTime, relation, \
                           overlapTimeMode = overlapTimeMode, relationMode = relationMode, subjectClassroomMode=subjectClassroomMode)
+        except KeyError:
+            continue
         # assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, profOfCDict, timeID, overlap, classes, timeOfClass, roomOfClass, overlapsWithTime, classSubject, relation, overlapTimeMode = True, relationMode = True)
     # Now calculate optimality.
 
@@ -917,7 +927,10 @@ def mainHC(overlapTimeMode = False, relationMode = False, subjectClassroomMode=F
     # filteredClasses = list(classSubject.keys())
     # for c in filteredClasses:
     for c in classes:
-        f.write(str(c) + '\t' + str(roomOfClass[c]) + '\t' + profOfCDict[c] + '\t' + timeOfClass[c] + '\t' + ' '.join(studentsTakingClass[c]) + '\n')  
+        try: 
+            f.write(str(c) + '\t' + str(roomOfClass[c]) + '\t' + profOfCDict[c] + '\t' + timeOfClass[c] + '\t' + ' '.join(studentsTakingClass[c]) + '\n')
+        except KeyError:
+            continue
     with open("schedule.txt") as f:
         print(f.read())
     
@@ -948,4 +961,4 @@ def mainHC(overlapTimeMode = False, relationMode = False, subjectClassroomMode=F
 """
 
 if __name__ == "__main__":
-    mainHC(overlapTimeMode =True, relationMode = True, subjectClassroomMode=False)
+    mainHC(overlapTimeMode =True, relationMode = True, subjectClassroomMode=True)
