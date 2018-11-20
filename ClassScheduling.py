@@ -248,8 +248,6 @@ def BMCparse():
         f.write("{}\t{}\n".format(i, sortedSubjectClassroom[i]))
     f.close()
 
-    return daysOfWeek, startTime, endTime, classes, professorOfClass, classSubject, roomSize, sortedSubjectClassroom
-
 
     # data not availble from excel file
     # preferences = [] 
@@ -280,6 +278,11 @@ def BMCparse():
     roomAndSubject = {} - dictionary of classroomID:subject_
     sortedSubjectClassroom = {} - dictionary of subject_:[list of tuples that store (classroomID, classroomCap) that are availble for that key/subject_] where the items in the second part of the tuple, meaning the classroomIDs, are sorted in order of LARGEST cap room to SMALLEST cap room
     '''
+
+    return daysOfWeek, startTime, endTime, AllTime, classes, professorOfClass, studentCap, subject, classSubject, subject_, classroomID, classroomCap, roomSize, roomAndSubject, sortedSubjectClassroom
+
+
+
 
 def HCparse():
 
