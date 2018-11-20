@@ -416,26 +416,29 @@ def HCparse():
 
         
         HCstudentprefs = open("haverford/haverfordStudentPrefs.txt", "r")
-        studentprefs = HCstudentprefs.read().replace("\t", " ").replace("\r", " ").replace("\n", " ").split(" ")
+        studentprefs = HCstudentprefs.read().replace("\t", " ").replace("\r", " ").split('\n')
 
-        # print studentprefs[0]
-        # for x in range 
+        studentprefs.pop(0)
 
-        # roomAndSubject = {}
-        # for x in range(len(subject_)):
-        #     roomAndSubject.update( { classroomID[x]: subject_[x] } )
-        # # print "roomAndSubject\n {}".format(roomAndSubject)
+        studentNumber = []
+        for i in range(len(studentprefs)-1):
+            temp = studentprefs[i].split(' ', 1)
+            studentNumber.append(temp[0])
 
-        # sortedSubjectClassroom = {}
-        # roomOptions = []
-        # for x in range(len(subject_)):
-        # # if subject_[x] in sortedSubjectClassroom and classroomID[x] not in sortedSubjectClassroom[subject_[x]]:
-        #     if subject_[x] in sortedSubjectClassroom:
-        #         if classroomID[x] not in sortedSubjectClassroom[subject_[x]] and is_nan(classroomID[x]) == False:
-        #             sortedSubjectClassroom[subject_[x]].append(classroomID[x])
-        #     else:
-        #         sortedSubjectClassroom.update( {subject_[x] : [classroomID[x]]} )
+        student_pref = []
+        for i in range(len(studentNumber)):
+            temp = studentprefs[i].split(' ', 1)
+            individualPrefs = temp[1].split(" ")
+            individualPrefs.pop(-1)
+            student_pref.append(individualPrefs)
 
+        studentPreferences = dict(zip(studentNumber, student_pref))
+
+
+        f = open("haverford_studentPreferences.txt","w+")
+        for i in studentNumber:
+            f.write("{}\t{}\n".format(i, studentPreferences[i]))
+        f.close()
 
 
         # overview of all arrays created in this function
@@ -463,10 +466,16 @@ def HCparse():
         classID = [] - list of classID 
         teacherID = [] - list of teacherID
         classID_teacherID = {} - dictionary of classID:teacherID correspondence 
+
+        !!following are parsed from haverfordStudentPrefs.txt
+
+        studentNumber = [] - list of student ID numbers
+        student_pref = [] - list of student preferences 
+        studentPreferences = {} - dictionary of studentNumber:student_pref ie a students ID number and their corresponding list of classID preferences
         '''
 
 
-        return daysOfWeek, startTime, endTime, professorOfClass, dictClasses
+        return professorOfClass, courseID, subject, timeID, startTime, endTime, daysOfWeek, timeTupes, roomSizeName, roomSizeCap, roomSize, classID, teacherID, classID_teacherID, studentNumber, student_pref, studentPreferences
 
 # Convert times to 24-hour format (for comparison).
 
@@ -661,7 +670,7 @@ def main():
     timeOfClass = {} # courseID: timeID
 
     # BMCparse()
-    # HCparse()
+    HCparse()
     
     preferencesDict = {}
     for s in students:
@@ -682,14 +691,14 @@ def main():
     for i in range(len(classes)):
         c = classes[i]
         f.write(str(c) + '\t' + str(roomOfClass[c]) + '\t' + professorOfClass[c] + '\t' + timeOfClass[c] + '\t' + ' '.join(studentsTakingClass[c]) + '\n')  
-    with open("schedule.txt") as f:
-        print(f.read())
+    # with open("schedule.txt") as f:
+        # print(f.read())
     
     total = 0
     for key in studentsTakingClass:
         total += len(studentsTakingClass[key])
     opt = total / (len(students) * 4)
-    print(opt)
+    # print(opt)
 
 """
     print('\n')
