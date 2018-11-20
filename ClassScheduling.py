@@ -250,37 +250,48 @@ def BMCparse():
     # data not availble from excel file
     # preferences = [] 
 
+    # overview of all arrays created in this function
+    '''
+    **see txt files with [college]_[name of data structure].txt for external version of parsed data
+
+    !!following are parsed from bmc-data-f17.xls file
+    daysOfWeek = [] - list of days a timeslot is run 
+    startTime = [] - list of start times 
+    endTime = [] - list of end times
+    allTime = {} - previous three lists correspond to one another and are all formatted in this data structure 
+
+    classes = [] - list of classes
+    professorOfClass = [] - list of professors
+    studentCap = [] - student capacity 
+
+    subject = [] - list of subjects 
+    classSubject = {} - dictionary of classes:subject
+
+    !!following are parsed from bmc-classroom-data-f17.xlsx file
+    subject_ = [] - list of subjects
+    classroomID = [] - list of classroom IDs
+    classroomCap = [] - list of capacities for each clasroom
+
+    roomSize = {} - dictionary of classroomID:classroomCap
+    roomAndSubject = {} - dictionary of classroomID:subject_
+    sortedSubjectClassroom = {} - dictionary of sorted subject_:[list of availble classrooms for that subject] organized by room capacity from LARGEST cap to SMALLEST cap
+    '''
+
 def HCparse():
     # HCexcel = pandas.read_excel('haverford/haverfordEnrollmentDataS14.csv')
 
     with open('haverford/haverfordEnrollmentDataS14.csv') as csvfile:
         readCSV = csv.reader(csvfile, delimiter = ',')
-        daysOfWeek = []
-        startTime = []
-        endTime = []
-        # classes = []
-        professorOfClass = []
 
+        professorOfClass = []
         courseID = []
         subject = []
         for row in readCSV:
-            # times = [] has been replaced with following three lists 
-            # daysOfWeek_ = row[18]
-            # startTime_ = row[13]
-            # endTime_ = row[16]
-
-            # classes_ = row[1]
-
             professorOfClass_ = row[11]
-            
-            # daysOfWeek.append(daysOfWeek_)
-            # startTime.append(startTime_)
-            # endTime.append(endTime_)
-            professorOfClass.append(professorOfClass_)
-
             courseID_ = row[1]
             subject_ = row[2]
 
+            professorOfClass.append(professorOfClass_)
             courseID.append(courseID_)
             subject.append(subject_)   
         
@@ -299,7 +310,11 @@ def HCparse():
             f.write("{}\t{}\n".format(i, dictClasses[i]))
         f.close()
 
-        # populating timeID, daysOfWeek, startTime, endTime arrays
+
+
+
+
+        # populating arrays from haverfordConstraints.txt file and haverfordConstraints_withZerios.txt file 
 
         timeID = []
         for i in range(1,61):
@@ -336,14 +351,159 @@ def HCparse():
                 daysOfWeek.append(justTimes[i])
             count = count + 1
 
+        timeTupes = list(zip(timeID, startTime, endTime, daysOfWeek))
+        # print timeTupes
 
         f = open("haverford_times.txt","w+")
         # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
-        for i in range(len(startTime)):
+        for i in range(len(timeTupes)):
             f.write("{}\t{}\t{}\n".format(startTime[i], endTime[i], daysOfWeek[i]))
+
+        for i in timeTupes: 
+            f.write("{}\n".format(i))
         f.close()
 
-        return timeID, startTime, endTime, daysOfWeek, professorOfClass, dictClasses
+
+
+        justRooms = []
+        for i in range(365, 465):
+            justRooms.append(constraints[i])
+        # print justRooms
+
+        roomSizeName = []
+        roomSizeCap = []
+        roomSize = {}
+        count = 0 
+        for i in range (len(justRooms)):
+            if count % 2 == 0:
+                roomSizeName.append(justRooms[i])
+            count = count + 1; 
+
+        # print roomSizeName
+
+        count = 0
+        for i in range (1, len(justRooms)):
+            if count % 2 == 0:
+                roomSizeCap.append(justRooms[i])
+            count = count + 1; 
+
+        # print roomSizeCap
+
+        roomSize = dict(zip(roomSizeName, roomSizeCap))
+
+        f = open("haverford_roomSize.txt","w+")
+        # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
+        for i in roomSize:
+            f.write("{}\t{}\n".format(i, roomSize[i]))
+        f.close()
+
+        # HCconstraints.close()
+
+        HCconstraintsEnd = open("haverford/haverfordConstraints_withZeros.txt", "r")
+        Endconstraints = HCconstraintsEnd.read().replace("\t", " ").replace("\r", " ").replace("\n", " ").split(" ")
+
+
+        justClassesAndTeachers = []
+        for i in range(564, len(Endconstraints)):
+            justClassesAndTeachers.append(Endconstraints[i])
+        # print justClassesAndTeachers
+
+        classID = []
+        teacherID = []
+        classID_teacherID = {}
+        count = 0 
+        for i in range (len(justClassesAndTeachers)):
+            if count % 2 == 0:
+                classID.append(justClassesAndTeachers[i])
+            count = count + 1; 
+
+        # print classID
+
+        count = 0
+        for i in range (1, len(justClassesAndTeachers)):
+            if count % 2 == 0:
+                teacherID.append(justClassesAndTeachers[i])
+            count = count + 1; 
+
+        # print teacherID
+
+        # for i in range(len(classID)):
+        #     classID_teacherID.update({classID[i], teacherID[i]})
+        
+        classID_teacherID = dict(zip(classID, teacherID))
+
+        # print classID_teacherID
+
+        f = open("haverford_classID_teacherID.txt","w+")
+        for i in classID_teacherID:
+            f.write("{}\t{}\n".format(i, classID_teacherID[i]))
+        f.close()
+
+        HCconstraintsEnd.close()
+
+        
+        HCstudentprefs = open("haverford/haverfordStudentPrefs.txt", "r")
+        studentprefs = HCstudentprefs.read().replace("\t", " ").replace("\r", " ").split('\n')
+
+        studentprefs.pop(0)
+
+        studentNumber = []
+        for i in range(len(studentprefs)-1):
+            temp = studentprefs[i].split(' ', 1)
+            studentNumber.append(temp[0])
+
+        student_pref = []
+        for i in range(len(studentNumber)):
+            temp = studentprefs[i].split(' ', 1)
+            individualPrefs = temp[1].split(" ")
+            individualPrefs.pop(-1)
+            student_pref.append(individualPrefs)
+
+        studentPreferences = dict(zip(studentNumber, student_pref))
+
+
+        f = open("haverford_studentPreferences.txt","w+")
+        for i in studentNumber:
+            f.write("{}\t{}\n".format(i, studentPreferences[i]))
+        f.close()
+
+
+        # overview of all arrays created in this function
+        '''
+        **see txt files with [college]_[name of data structure].txt for external version of parsed data
+
+        !!following from excel file 
+        professorOfClass = [] - list of professors
+        courseID = [] - list of courseIDs
+        subject = [] - list of subjects
+
+        !!following are from haverfordConstraints file 
+
+        timeID = [] - list of times from 1 - 60
+        startTime = [] - list of start times 
+        endTime = [] - list of end times 
+        daysOfWeek = [] - list of the days the times are scheduled for
+        timeTupes = [] - a list of tuples of all this data meshed into one 
+
+        roomSizeName = [] - list of room names 
+        roomSizeCap = [] - list of room size capacity 
+        roomSize = {} - dictionary of roomSizeName:roomSizeCap
+
+        !!following are parsed from other haverfordfile (haverfordConstraints_withZeros) in which i filled in zeros for when there isn't a corresponding teacherID for a particular classID
+
+        classID = [] - list of classID 
+        teacherID = [] - list of teacherID
+        classID_teacherID = {} - dictionary of classID:teacherID correspondence 
+
+        !!following are parsed from haverfordStudentPrefs.txt
+
+        studentNumber = [] - list of student ID numbers
+        student_pref = [] - list of student preferences 
+        studentPreferences = {} - dictionary of studentNumber:student_pref ie a students ID number and their corresponding list of classID preferences
+        '''
+
+
+        return professorOfClass, courseID, subject, timeID, startTime, endTime, daysOfWeek, timeTupes, roomSizeName, roomSizeCap, roomSize, classID, teacherID, classID_teacherID, studentNumber, student_pref, studentPreferences
 
 # Convert times to 24-hour format (for comparison).
 
@@ -538,7 +698,7 @@ def main():
     timeOfClass = {} # courseID: timeID
 
     # BMCparse()
-    # HCparse()
+    HCparse()
     
     preferencesDict = {}
     for s in students:
@@ -559,14 +719,14 @@ def main():
     for i in range(len(classes)):
         c = classes[i]
         f.write(str(c) + '\t' + str(roomOfClass[c]) + '\t' + professorOfClass[c] + '\t' + timeOfClass[c] + '\t' + ' '.join(studentsTakingClass[c]) + '\n')  
-    with open("schedule.txt") as f:
-        print(f.read())
+    # with open("schedule.txt") as f:
+        # print(f.read())
     
     total = 0
     for key in studentsTakingClass:
         total += len(studentsTakingClass[key])
     opt = total / (len(students) * 4)
-    print(opt)
+    # print(opt)
 
 """
     print('\n')
