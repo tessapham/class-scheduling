@@ -47,7 +47,7 @@ import csv
 import datetime
 import math
 import numpy as np
-
+import time
 
 # write multiple parse functions (for the demo file, for the preference lists of students, etc.) if necessary
 
@@ -419,15 +419,13 @@ def HCparse():
 
         #make classLevel, {classID: classLevel}
         
-        LevelNumber=[]
+        classLevel={}
         with open('haverford/haverfordEnrollmentDataS14.csv') as csvfile:
             readCSV = csv.reader(csvfile, delimiter = ',')
             for row in readCSV:
                 level = row[4]
-                LevelNumber.append(level) 
-        classLevel=dict(zip(classID, LevelNumber))
-        
-        
+                classnum=row[1]
+                classLevel[classnum]=level                 
         
         # print classID_teacherID
 
@@ -467,7 +465,7 @@ def HCparse():
         subject = []
         classroomID = []
 
-        # new excel file made by Xinyi
+
         with open('haverford/haverford-classroom-data.csv') as csvfile:
             readHC = csv.reader(csvfile, delimiter = ',')
 
@@ -811,7 +809,7 @@ def assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, 
                 if count < min_overlap:
                     min_overlap = count
                     chosen_time = t
-    if (subjectClassroomMode):
+    if (classLevel):
         classLevelTimeRecord[t,classSubject[c]].append(classLevel[c])
 
     # add class c to the chosen time
@@ -901,7 +899,7 @@ def mainHC(classLevelMode=False, overlapTimeMode = False, relationMode = False, 
     # Below is how we will use HCparse() to get a list of mutually exclusive time slots.
     
     # professorOfClass, courseID, subject, classSubject, timeID, startTime, endTime, daysOfWeek, classroomID, classroomCap, roomSize, classID, teacherID, classID_teacherID, students, preferences, preferencesDict = HCparse()
-    classLevel, professorOfClass, courseID, subject, classSubject, times, startTime, endTime, daysOfWeek, classroomID, classroomCap, roomSize, classID, teacherID, classID_teacherID, students, preferences, preferencesDict, sortedSubjectClassroom = HCparse()
+    classLevel, professorOfClass, courseID, subject, classSubject, times, startTime, endTime, daysOfWeek, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, students, preferences, preferencesDict,sortedSubjectClassroom = HCparse()
     # startTime, endTime = convertTimes(startTime, endTime)
     timeTuples = list(zip(times, startTime, endTime, daysOfWeek))
     overlapsWithTime = getOverlappingTimes(timeTuples)
@@ -986,4 +984,6 @@ def mainHC(classLevelMode=False, overlapTimeMode = False, relationMode = False, 
 """
 
 if __name__ == "__main__":
-    mainHC(classLevelMode=True, overlapTimeMode = False, relationMode = False, subjectClassroomMode=True)
+    start_time=time.time()
+    mainHC(classLevelMode=False, overlapTimeMode = False, relationMode = False, subjectClassroomMode=False)
+    print("%s seconds" %(time.time() - start_time))
