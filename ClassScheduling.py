@@ -159,11 +159,11 @@ def BMCparse():
     studentCap = BMCexcel["Class Cap"]
 
 
-    print("\n\ndaysOfWeek \n {}".format(daysOfWeek))
-    print("\n\nstartTime \n {}".format(startTime))
-    print("\n\nendTime \n {}".format(endTime))
-    print("\n\nclasses \n {}".format(classes))
-    print("\n\nprofessorOfClass \n {}".format(professorOfClass))
+    # print("\n\ndaysOfWeek \n {}".format(daysOfWeek))
+    # print("\n\nstartTime \n {}".format(startTime))
+    # print("\n\nendTime \n {}".format(endTime))
+    # print("\n\nclasses \n {}".format(classes))
+    # print("\n\nprofessorOfClass \n {}".format(professorOfClass))
 
     f = open("brynmawr_date.txt","w+")
     # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
@@ -224,26 +224,30 @@ def BMCparse():
     roomAndSubject = {}
     for x in range(len(subject_)):
         roomAndSubject.update( { classroomID[x]: subject_[x] } )
-    # print("roomAndSubject\n {}".format(roomAndSubject))
 
     sortedSubjectClassroom = {}
     roomOptions = []
     for x in range(len(subject_)):
-        # if subject_[x] in sortedSubjectClassroom and classroomID[x] not in sortedSubjectClassroom[subject_[x]]:
         if subject_[x] in sortedSubjectClassroom:
             if classroomID[x] not in sortedSubjectClassroom[subject_[x]] and is_nan(classroomID[x]) == False:
-                sortedSubjectClassroom[subject_[x]].append(classroomID[x])
+                toAppend = tuple((classroomID[x], roomSize[classroomID[x]]))
+                sortedSubjectClassroom[subject_[x]].append(toAppend)
         else:
-            sortedSubjectClassroom.update( {subject_[x] : [classroomID[x]]} )
+            toAppend = tuple((classroomID[x], roomSize[classroomID[x]]))
+            sortedSubjectClassroom.update({subject_[x] : [toAppend]})
 
     sortedSubjectClassroom["SOWK"].pop(0)
     del sortedSubjectClassroom["VILLANOV"]
     # print(sortedSubjectClassroom)
 
+    for k in sortedSubjectClassroom:
+        print sortedSubjectClassroom[k].sort(key=lambda tup: tup[1], reverse=True)
+
     f = open("brynmawr_sortedSubjectClassroom.txt","w+")
     for i in sortedSubjectClassroom:
         f.write("{}\t{}\n".format(i, sortedSubjectClassroom[i]))
     f.close()
+
     return daysOfWeek, startTime, endTime, classes, professorOfClass, classSubject, roomSize, sortedSubjectClassroom
 
 
@@ -274,7 +278,7 @@ def BMCparse():
 
     roomSize = {} - dictionary of classroomID:classroomCap
     roomAndSubject = {} - dictionary of classroomID:subject_
-    sortedSubjectClassroom = {} - dictionary of sorted subject_:[list of availble classrooms for that subject] organized by room capacity from LARGEST cap to SMALLEST cap
+    sortedSubjectClassroom = {} - dictionary of subject_:[list of tuples that store (classroomID, classroomCap) that are availble for that key/subject_] where the items in the second part of the tuple, meaning the classroomIDs, are sorted in order of LARGEST cap room to SMALLEST cap room
     '''
 
 def HCparse():
@@ -309,10 +313,6 @@ def HCparse():
         for i in dictClasses:
             f.write("{}\t{}\n".format(i, dictClasses[i]))
         f.close()
-
-
-
-
 
         # populating arrays from haverfordConstraints.txt file and haverfordConstraints_withZerios.txt file 
 
@@ -697,7 +697,7 @@ def main():
     roomOfClass = {} # courseID: roomID
     timeOfClass = {} # courseID: timeID
 
-    # BMCparse()
+    BMCparse()
     HCparse()
     
     preferencesDict = {}
