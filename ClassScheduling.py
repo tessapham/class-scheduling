@@ -330,7 +330,7 @@ def HCparse():
                 endTime.append(justTimes[i]+""+justTimes[i+1])
             count = count + 1
 
-        print endTime
+        # print endTime
         
         count = 0
         for i in range (4, len(justTimes)):
@@ -446,7 +446,7 @@ def HCparse():
             individualPrefs = temp[1].split(" ")
             individualPrefs.pop(-1)
             student_pref.append(individualPrefs)
-        print student_pref[0]
+        # print student_pref[0]
 
         studentPreferences = dict(zip(studentNumber, student_pref))
 
