@@ -320,10 +320,12 @@ def HCparse():
                 startTime.append(justTimes[i]+""+justTimes[i+1])
             count = count + 1
         count = 0
+
         for i in range (2, len(justTimes)):
             if count % 6 == 0:
                 endTime.append(justTimes[i]+""+justTimes[i+1])
             count = count + 1
+
         count = 0
         for i in range (4, len(justTimes)):
             if count % 6 == 0:
@@ -471,7 +473,7 @@ def HCparse():
             subject.pop(0)
             classroomID.pop(0)
 
-        print classroomID 
+        # print classroomID 
         
         classSubject = {}
         for x in range(len(courseID)):
@@ -546,7 +548,7 @@ def HCparse():
         '''
 
 
-        return professorOfClass, courseID, subject, timeID, startTime, endTime, daysOfWeek, timeTupes, roomSizeName, roomSizeCap, roomSize, classID, teacherID, classID_teacherID, studentNumber, student_pref, studentPreferences
+        return timeID, startTime, endTime, daysOfWeek, timeTupes, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, studentNumber, student_pref, studentPreferences, courseID, subject, classroomID, classSubject, roomAndSubject, sortedSubjectClassroom
 
 # Convert times to 24-hour format (for comparison).
 
