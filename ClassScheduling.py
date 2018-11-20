@@ -264,32 +264,16 @@ def HCparse():
 
     with open('haverford/haverfordEnrollmentDataS14.csv') as csvfile:
         readCSV = csv.reader(csvfile, delimiter = ',')
-        daysOfWeek = []
-        startTime = []
-        endTime = []
-        # classes = []
-        professorOfClass = []
 
+        professorOfClass = []
         courseID = []
         subject = []
         for row in readCSV:
-            # times = [] has been replaced with following three lists 
-            # daysOfWeek_ = row[18]
-            # startTime_ = row[13]
-            # endTime_ = row[16]
-
-            # classes_ = row[1]
-
             professorOfClass_ = row[11]
-            
-            # daysOfWeek.append(daysOfWeek_)
-            # startTime.append(startTime_)
-            # endTime.append(endTime_)
-            professorOfClass.append(professorOfClass_)
-
             courseID_ = row[1]
             subject_ = row[2]
 
+            professorOfClass.append(professorOfClass_)
             courseID.append(courseID_)
             subject.append(subject_)   
         
@@ -309,7 +293,10 @@ def HCparse():
         f.close()
 
 
-        # populating timeID, daysOfWeek, startTime, endTime arrays
+
+
+
+        # populating arrays from haverfordConstraints.txt file and haverfordConstraints_withZerios.txt file 
 
         timeID = []
         for i in range(1,61):
@@ -347,14 +334,146 @@ def HCparse():
                 daysOfWeek.append(justTimes[i])
             count = count + 1
 
+        timeTupes = list(zip(timeID, startTime, endTime, daysOfWeek))
+        # print timeTupes
 
         f = open("haverford_times.txt","w+")
         # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
-        for i in range(len(startTime)):
+        for i in range(len(timeTupes)):
             f.write("{}\t{}\t{}\n".format(startTime[i], endTime[i], daysOfWeek[i]))
+
+        for i in timeTupes: 
+            f.write("{}\n".format(i))
         f.close()
 
-        # print startTime
+
+
+        justRooms = []
+        for i in range(365, 465):
+            justRooms.append(constraints[i])
+        # print justRooms
+
+        roomSizeName = []
+        roomSizeCap = []
+        roomSize = {}
+        count = 0 
+        for i in range (len(justRooms)):
+            if count % 2 == 0:
+                roomSizeName.append(justRooms[i])
+            count = count + 1; 
+
+        # print roomSizeName
+
+        count = 0
+        for i in range (1, len(justRooms)):
+            if count % 2 == 0:
+                roomSizeCap.append(justRooms[i])
+            count = count + 1; 
+
+        # print roomSizeCap
+
+        roomSize = dict(zip(roomSizeName, roomSizeCap))
+
+        f = open("haverford_roomSize.txt","w+")
+        # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
+        for i in roomSize:
+            f.write("{}\t{}\n".format(i, roomSize[i]))
+        f.close()
+
+        # HCconstraints.close()
+
+        HCconstraintsEnd = open("haverford/haverfordConstraints_withZeros.txt", "r")
+        Endconstraints = HCconstraintsEnd.read().replace("\t", " ").replace("\r", " ").replace("\n", " ").split(" ")
+
+
+        justClassesAndTeachers = []
+        for i in range(564, len(Endconstraints)):
+            justClassesAndTeachers.append(Endconstraints[i])
+        # print justClassesAndTeachers
+
+        classID = []
+        teacherID = []
+        classID_teacherID = {}
+        count = 0 
+        for i in range (len(justClassesAndTeachers)):
+            if count % 2 == 0:
+                classID.append(justClassesAndTeachers[i])
+            count = count + 1; 
+
+        # print classID
+
+        count = 0
+        for i in range (1, len(justClassesAndTeachers)):
+            if count % 2 == 0:
+                teacherID.append(justClassesAndTeachers[i])
+            count = count + 1; 
+
+        # print teacherID
+
+        # for i in range(len(classID)):
+        #     classID_teacherID.update({classID[i], teacherID[i]})
+        
+        classID_teacherID = dict(zip(classID, teacherID))
+
+        # print classID_teacherID
+
+        f = open("haverford_classID_teacherID.txt","w+")
+        for i in classID_teacherID:
+            f.write("{}\t{}\n".format(i, classID_teacherID[i]))
+        f.close()
+
+        HCconstraintsEnd.close()
+
+        
+        HCstudentprefs = open("haverford/haverfordStudentPrefs.txt", "r")
+        studentprefs = HCstudentprefs.read().replace("\t", " ").replace("\r", " ").replace("\n", " ").split(" ")
+
+        # print studentprefs[0]
+        # for x in range 
+
+        # roomAndSubject = {}
+        # for x in range(len(subject_)):
+        #     roomAndSubject.update( { classroomID[x]: subject_[x] } )
+        # # print "roomAndSubject\n {}".format(roomAndSubject)
+
+        # sortedSubjectClassroom = {}
+        # roomOptions = []
+        # for x in range(len(subject_)):
+        # # if subject_[x] in sortedSubjectClassroom and classroomID[x] not in sortedSubjectClassroom[subject_[x]]:
+        #     if subject_[x] in sortedSubjectClassroom:
+        #         if classroomID[x] not in sortedSubjectClassroom[subject_[x]] and is_nan(classroomID[x]) == False:
+        #             sortedSubjectClassroom[subject_[x]].append(classroomID[x])
+        #     else:
+        #         sortedSubjectClassroom.update( {subject_[x] : [classroomID[x]]} )
+
+
+
+        # overview of all arrays created in this function
+        '''
+
+        !!following from excel file 
+        professorOfClass = [] - list of professors
+        courseID = [] - list of courseIDs
+        subject = [] - list of subjects
+
+        !!following are from haverfordConstraints file 
+
+        timeID = [] - list of times from 1 - 60
+        startTime = [] - list of start times 
+        endTime = [] - list of end times 
+        daysOfWeek = [] - list of the days the times are scheduled for
+        timeTupes = [] - a list of tuples of all this data meshed into one 
+
+        roomSizeName = [] - list of room names 
+        roomSizeCap = [] - list of room size capacity 
+        roomSize = {} - dictionary of roomSizeName:roomSizeCap
+
+        !!following are parsed from other haverfordfile (haverfordConstraints_withZeros) in which i filled in zeros for when there isn't a corresponding teacherID for a particular classID
+
+        classID = [] - list of classID 
+        teacherID = [] - list of teacherID
+        classID_teacherID = {} - dictionary of classID:teacherID correspondence 
+        '''
 
 
         return daysOfWeek, startTime, endTime, professorOfClass, dictClasses
