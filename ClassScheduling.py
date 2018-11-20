@@ -185,10 +185,11 @@ def BMCparse():
         f.write("{}\n".format(i))
     f.close()
 
-    allTime = zip(daysOfWeek, startTime, endTime)
+    timeTupes = list(zip(startTime, endTime, daysOfWeek))
+
     f = open("brynmawr_allTimes.txt","w+")
     # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
-    for i in allTime:
+    for i in timeTupes:
         f.write("{}\n".format(i))
     f.close()
 
@@ -248,8 +249,6 @@ def BMCparse():
         f.write("{}\t{}\n".format(i, sortedSubjectClassroom[i]))
     f.close()
 
-    return daysOfWeek, startTime, endTime, classes, professorOfClass, classSubject, roomSize, sortedSubjectClassroom
-
 
     # data not availble from excel file
     # preferences = [] 
@@ -259,10 +258,10 @@ def BMCparse():
     **see txt files with [college]_[name of data structure].txt for external version of parsed data
 
     !!following are parsed from bmc-data-f17.xls file
-    daysOfWeek = [] - list of days a timeslot is run 
     startTime = [] - list of start times 
     endTime = [] - list of end times
-    allTime = {} - previous three lists correspond to one another and are all formatted in this data structure 
+    daysOfWeek = [] - list of days a timeslot is run 
+    timeTupes = {} - previous three lists correspond to one another and are all formatted in this data structure 
 
     classes = [] - list of classes
     professorOfClass = [] - list of professors
@@ -280,6 +279,12 @@ def BMCparse():
     roomAndSubject = {} - dictionary of classroomID:subject_
     sortedSubjectClassroom = {} - dictionary of subject_:[list of tuples that store (classroomID, classroomCap) that are availble for that key/subject_] where the items in the second part of the tuple, meaning the classroomIDs, are sorted in order of LARGEST cap room to SMALLEST cap room
     """
+
+    return daysOfWeek, startTime, endTime, timeTupes, classes, professorOfClass, studentCap, subject, classSubject, subject_, classroomID, classroomCap, roomSize, roomAndSubject, sortedSubjectClassroom
+
+
+
+
 def HCparse():
 
     professorOfClass = []
@@ -318,10 +323,14 @@ def HCparse():
                 startTime.append(justTimes[i]+""+justTimes[i+1])
             count = count + 1
         count = 0
+
         for i in range (2, len(justTimes)):
             if count % 6 == 0:
                 endTime.append(justTimes[i]+""+justTimes[i+1])
             count = count + 1
+
+        print endTime
+        
         count = 0
         for i in range (4, len(justTimes)):
             if count % 6 == 0:
@@ -535,6 +544,8 @@ def HCparse():
         """
 
         return professorOfClass, courseID, subject, classSubject, timeID, startTime, endTime, daysOfWeek, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, students, preferences, preferencesDict
+
+        # return timeID, startTime, endTime, daysOfWeek, timeTupes, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, studentNumber, student_pref, studentPreferences, courseID, subject, classroomID, classSubject, roomAndSubject, sortedSubjectClassroom
 
 # Convert times to 24-hour format (for comparison).
 
