@@ -457,10 +457,10 @@ def HCparse():
         classroomID.pop(0)
         professorID.pop(0)
 
-    print len(courseID)
-    print len(professorID)
-    print len(subject)
-    print len(classroomID)
+    # print len(courseID)
+    # print len(professorID)
+    # print len(subject)
+    # print len(classroomID)
 
     testTuples = list(zip(classroomID, courseID, subject, professorID))
         
@@ -469,17 +469,11 @@ def HCparse():
         f.write("{}\n".format(i))
     f.close()
 
-
-    # classroomID_filtered = list(filter(None, classroomID))
-    # classroomID_fromtxt.sort()
-    # classroomID_filtered = list(set(classroomID_filtered))
-    # classroomID_filtered.sort()
-
-
     classSubject = {}
     for x in range(len(courseID)):
         classSubject.update( {courseID[x] : subject[x]} )
 
+    # print len(classSubject)
 
     f = open("haverford_classSubject.txt","w+")
     for i in classSubject:
@@ -553,7 +547,7 @@ def HCparse():
     # return professorOfClass, courseID, subject, classroomID, classSubject, timeID, startTime, endTime, daysOfWeek, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, students, preferences, preferencesDict,sortedSubjectClassroom
 
     # return timeID, startTime, endTime, daysOfWeek, timeTuples, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, studentNumber, student_pref, studentPreferences, courseID, subject, classroomID, classSubject, roomAndSubject, sortedSubjectClassroom
-    # return classLevel, professorID, courseID, subject, classSubject, timeID, startTime, endTime, daysOfWeek, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, studentNumber, preferences, preferencesDict,sortedSubjectClassroom
+    return classLevel, professorID, courseID, subject, classSubject, timeID, startTime, endTime, daysOfWeek, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, studentNumber, preferences, preferencesDict,sortedSubjectClassroom
 
 # Convert times to 24-hour format (for comparison).
 
@@ -977,7 +971,7 @@ def mainHC(classLevelMode = False, overlapTimeMode = False, relationMode = False
 """
 
 if __name__ == "__main__":
-    # mainHC(overlapTimeMode =False, relationMode = False, subjectClassroomMode=False)
+    mainHC(overlapTimeMode =False, relationMode = False, subjectClassroomMode=False)
     start_time=time.time()
     # mainHC(classLevelMode=False, overlapTimeMode = False, relationMode = False, subjectClassroomMode=True)
     HCparse()
