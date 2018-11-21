@@ -806,39 +806,13 @@ def mainHC(classLevelMode=False, overlapTimeMode = False, relationMode = False, 
     classLevelTimeRecord={(t,s):[] for t in times for s in subject}
     
     
-    if (overlapTimeMode ==True & relationMode == True):
-        print("overlapTimeMode =True, relationMode = True")
-        for c in classes:
-                assignClassToTime23(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, \
-                                  profOfCDict, times, overlap, classes, timeOfClass, roomSize, roomOfClass, \
-                                  classSubject, sortedSubjectClassroom, overlapsWithTime, relation, \
-                                  classLevel, classLevelTimeRecord, classLevelMode = False, \
-                                  overlapTimeMode = True, relationMode = True, subjectClassroomMode = False)
-    elif classLevelMode ==True:
-        print("classLevelMode ==True")
-        for c in classes:
-            assignClassToTime1(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, \
-                                  profOfCDict, times, overlap, classes, timeOfClass, roomSize, roomOfClass, \
-                                  classSubject, sortedSubjectClassroom, overlapsWithTime, relation, \
+    
+    print("classLevelMode ==True")
+    for c in classes:
+        assignClassToTime1(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, \
+                          profOfCDict, times, overlap, classes, timeOfClass, roomSize, roomOfClass, \
+                                 classSubject, sortedSubjectClassroom, overlapsWithTime, relation, \
                                   classLevel, classLevelTimeRecord, classLevelMode = True, \
-                                  overlapTimeMode = False, relationMode = False, subjectClassroomMode = False)
-
-    elif (subjectClassroomMode==True):
-        print("subjectClassroomMode ==True")
-        for c in classes:
-            assignClassToTime23(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, \
-                                  profOfCDict, times, overlap, classes, timeOfClass, roomSize, roomOfClass, \
-                                  classSubject, sortedSubjectClassroom, overlapsWithTime, relation, \
-                                  classLevel, classLevelTimeRecord, classLevelMode = False, \
-                                  overlapTimeMode = False, relationMode = False, subjectClassroomMode = True)
-
-    else:
-        print("Everything turned off.")
-        for c in classes:
-            assignClassToTime23(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, \
-                                  profOfCDict, times, overlap, classes, timeOfClass, roomSize, roomOfClass, \
-                                  classSubject, sortedSubjectClassroom, overlapsWithTime, relation, \
-                                  classLevel, classLevelTimeRecord, classLevelMode = False, \
                                   overlapTimeMode = False, relationMode = False, subjectClassroomMode = False)
 
 
