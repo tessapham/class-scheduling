@@ -270,12 +270,12 @@ def HCparse():
 
     constraints = list(filter(None, constraints))
 
-    # print constraints[2]
+    print constraints[2]
 
     timeID = []
-    for i in range(1,len(constraints[2])):
+    for i in range(1,int(constraints[2])):
         timeID.append(str(i))
-
+    print timeID
 
     justTimes = []
     for i in range(4, 351):
