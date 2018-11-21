@@ -1345,8 +1345,7 @@ if __name__ == "__main__":
     # HCparse()
     opt = main()
     total = time.time() - start_time
-    print("%s seconds" %(total))
-    print("%s opt" %(opt))
+    print("%s seconds \t %s opt" %(total, opt))
     # f = open("listoftests.txt", "w+")
     # f.write("time: {}".format(total))
     # f.write("opt: {}".format(opt))
