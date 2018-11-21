@@ -77,6 +77,8 @@ def parseTXT():
             for j in range(1, int(splitDemoCon[i + 1]) + 1): # range(1, 15)
                 classes.append(j) # classes[0..13] will store 1 - 14, same as students above!
 
+    # print classes 
+
     # parse classrooms and roomSize
     i = 0    
     while splitDemoCon[i] != "Rooms":
@@ -87,6 +89,8 @@ def parseTXT():
         roomSize[splitDemoCon[i+2]] = int(splitDemoCon[i + 3])
         i += 2
         count += 1
+    
+    # print roomSize
 
     # times
     for i in range(0, int(splitDemoCon[2])):
@@ -98,6 +102,9 @@ def parseTXT():
         if splitDemoCon[i] == "Teachers":
             for j in range(i + 3, len(splitDemoCon), 2):
                 professorOfClass.append(splitDemoCon[j])
+
+    # print professorOfClass
+
     DC.close()
     ptemp = [[int(u) for u in x] for x in preferences]
     preferences = ptemp
@@ -1199,7 +1206,7 @@ def calculateStudentsInClass(timeOfClass, classes, students, preferencesDict):
 def main():
     roomSize, students, preferences, classes, times, professorOfClass = parseTXT()
     studentsInClass, overlap, classes, availableRoomsInTime, relation = construct(students, preferences, classes, roomSize, times, classSubject = None, relationMode = False)
-    print(availableRoomsInTime['2'])
+    # print(availableRoomsInTime['2'])
     # classesInTime:  a dictionary (key = time, value = list of classes in that time)
     classesInTime = {t: [] for t in times}
     # professorsInTime: a dictionary (key = time, value = list of professors teaching a class in that time)
@@ -1228,19 +1235,19 @@ def main():
 
     studentsTakingClass = calculateStudentsInClass(timeOfClass, classes, students, preferencesDict)
 
-    # f = open("schedule.txt", "w+")
-    # f.write("Course" + '\t' + "Room" + '\t' + "Teacher" + '\t' + "Time" + '\t' + "Students" + '\n')
-    # for i in range(len(classes)):
-    #     c = classes[i]
-    #     f.write(str(c) + '\t' + str(roomOfClass[c]) + '\t' + professorOfClass[c] + '\t' + timeOfClass[c] + '\t' + ' '.join(studentsTakingClass[c]) + '\n')  
-    # with open("schedule.txt") as f:
-    #     print(f.read())
+    f = open("schedule.txt", "w+")
+    f.write("Course" + '\t' + "Room" + '\t' + "Teacher" + '\t' + "Time" + '\t' + "Students" + '\n')
+    for i in range(len(classes)):
+        c = classes[i]
+        f.write(str(c) + '\t' + str(roomOfClass[c]) + '\t' + professorOfClass[c] + '\t' + timeOfClass[c] + '\t' + ' '.join(studentsTakingClass[c]) + '\n')  
+    with open("schedule.txt") as f:
+        print(f.read())
     
     total = 0
     for key in studentsTakingClass:
         total += len(studentsTakingClass[key])
-    opt = total / (len(students) * 4)
-    print(opt)
+    opt = total / float((len(students) * 4))
+    print opt
 
 
 def mainHC(classLevelMode = False, overlapTimeMode = False, relationMode = False, subjectClassroomMode = False):
@@ -1335,7 +1342,7 @@ def mainHC(classLevelMode = False, overlapTimeMode = False, relationMode = False
 if __name__ == "__main__":
     # mainHC(overlapTimeMode =False, relationMode = False, subjectClassroomMode=False)
     start_time = time.time()
-    mainHC(classLevelMode = False, overlapTimeMode = False, relationMode = False, subjectClassroomMode = False)
+    # mainHC(classLevelMode = False, overlapTimeMode = False, relationMode = False, subjectClassroomMode = False)
     # HCparse()
-    # main()
+    main()
     print("%s seconds" %(time.time() - start_time))
