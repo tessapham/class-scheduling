@@ -264,29 +264,7 @@ def HCparse():
             level = row[4]
             classnum = row[1]
             classLevel[classnum] = level   
-
-
-    professorOfClass = []
-    course__ID = []
-    __subject = []
-    with open('haverford/haverfordEnrollmentDataS14.csv') as csvfile:
-        readCSV = csv.reader(csvfile, delimiter = ',')
-        for row in readCSV:
-            professorOfClass_ = row[11]
-            professorOfClass.append(professorOfClass_)
-
-            courseID_ = row[1]
-            subject_ = row[2]
-
-            course__ID.append(courseID_)
-            __subject.append(subject_)
-     
-        professorOfClass.pop(0)
-    
-    classSubject = dict(zip(course__ID, __subject))
         
-
-
 
     # PARSING NEW CONSTRAINTS FILE 
     HCconstraints = open("haverford/newConstraints.txt", "r")
@@ -458,13 +436,33 @@ def HCparse():
 
 
 
-    # OLD PARSING 
+    
+    professorOfClass = []
+    # course__ID = []
+    # __subject = []
+    with open('haverford/haverfordEnrollmentDataS14.csv') as csvfile:
+        readCSV = csv.reader(csvfile, delimiter = ',')
+        for row in readCSV:
+            professorOfClass_ = row[11]
+            professorOfClass.append(professorOfClass_)
+
+            # courseID_ = row[1]
+            # subject_ = row[2]
+
+            # courseID.append(courseID_)
+            # subject.append(subject_)
+     
+    professorOfClass.pop(0)
+
+    # f.close()
+
+
 
     courseID = []
     subject = []
     classroomID = []
     
-    # new excel file made by Xinyi
+    # new excel file made by Lizzy
     with open('haverford/haverford-classroom-data.csv') as csvfile:
         readHC = csv.reader(csvfile, delimiter = ',')
 
@@ -482,7 +480,7 @@ def HCparse():
         classroomID.pop(0)
 
     # print classroomID[0]
-    
+
     classSubject = {}
     for x in range(len(courseID)):
         classSubject.update( {courseID[x] : subject[x]} )
@@ -559,7 +557,7 @@ def HCparse():
     # return professorOfClass, courseID, subject, classroomID, classSubject, timeID, startTime, endTime, daysOfWeek, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, students, preferences, preferencesDict,sortedSubjectClassroom
 
     # return timeID, startTime, endTime, daysOfWeek, timeTupes, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, studentNumber, student_pref, studentPreferences, courseID, subject, classroomID, classSubject, roomAndSubject, sortedSubjectClassroom
-    # return classLevel, professorOfClass, courseID, subject, classSubject, timeID, startTime, endTime, daysOfWeek, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, students, preferences, preferencesDict,sortedSubjectClassroom
+    return classLevel, professorOfClass, courseID, subject, classSubject, timeID, startTime, endTime, daysOfWeek, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, studentNumber, preferences, preferencesDict,sortedSubjectClassroom
 
 # Convert times to 24-hour format (for comparison).
 
@@ -847,7 +845,7 @@ def calculateStudentsInClass(timeOfClass, classes, students, preferencesDict):
 
 def main():
 
-    HCparse(); 
+    # HCparse(); 
 
     roomSize, students, preferences, classes, times, professorOfClass = parseTXT()
     studentsInClass, overlap, classes, availableRoomsInTime, relation = construct(students, preferences, classes, roomSize, times, classSubject = None, relationMode = False)
@@ -948,11 +946,11 @@ def mainHC(classLevelMode = False, overlapTimeMode = False, relationMode = False
     # f = open("schedule.txt", "w+")
     # f.write("Course" + '\t' + "Room" + '\t' + "Teacher" + '\t' + "Time" + '\t' + "Students" + '\n')
 
-    for c in classes:
-        try: 
-            f.write(str(c) + '\t' + str(roomOfClass[c]) + '\t' + profOfCDict[c] + '\t' + timeOfClass[c] + '\t' + ' '.join(studentsTakingClass[c]) + '\n')
-        except KeyError:
-            continue
+    # for c in classes:
+    #     try: 
+    #         f.write(str(c) + '\t' + str(roomOfClass[c]) + '\t' + profOfCDict[c] + '\t' + timeOfClass[c] + '\t' + ' '.join(studentsTakingClass[c]) + '\n')
+    #     except KeyError:
+    #         continue
 #    with open("schedule.txt") as f:
 #        print(f.read())
     
@@ -983,8 +981,8 @@ def mainHC(classLevelMode = False, overlapTimeMode = False, relationMode = False
 """
 
 if __name__ == "__main__":
-    # mainHC(overlapTimeMode =False, relationMode = False, subjectClassroomMode=False)
+    mainHC(overlapTimeMode =False, relationMode = False, subjectClassroomMode=False)
     start_time=time.time()
     # mainHC(classLevelMode=False, overlapTimeMode = False, relationMode = False, subjectClassroomMode=True)
-    main()
+    # main()
     print("%s seconds" %(time.time() - start_time))
