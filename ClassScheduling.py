@@ -267,8 +267,8 @@ def HCparse():
 
 
     professorOfClass = []
-    courseID = []
-    subject = []
+    course__ID = []
+    __subject = []
     with open('haverford/haverfordEnrollmentDataS14.csv') as csvfile:
         readCSV = csv.reader(csvfile, delimiter = ',')
         for row in readCSV:
@@ -278,12 +278,12 @@ def HCparse():
             courseID_ = row[1]
             subject_ = row[2]
 
-            courseID.append(courseID_)
-            subject.append(subject_)
+            course__ID.append(courseID_)
+            __subject.append(subject_)
      
         professorOfClass.pop(0)
     
-    classSubject = dict(zip(courseID, subject))
+    classSubject = dict(zip(course__ID, __subject))
         
 
 
@@ -460,62 +460,62 @@ def HCparse():
 
     # OLD PARSING 
 
-    # courseID = []
-    # subject = []
-    # classroomID = []
+    courseID = []
+    subject = []
+    classroomID = []
     
     # new excel file made by Xinyi
-    # with open('haverford/haverford-classroom-data.csv') as csvfile:
-    #     readHC = csv.reader(csvfile, delimiter = ',')
+    with open('haverford/haverford-classroom-data.csv') as csvfile:
+        readHC = csv.reader(csvfile, delimiter = ',')
 
-    #     for row in readHC:
-    #         courseID_ = row[0]
-    #         subject_ = row[1]
-    #         classroomID_ = row[2]
+        for row in readHC:
+            courseID_ = row[0]
+            subject_ = row[1]
+            classroomID_ = row[2]
 
-    #         courseID.append(courseID_)
-    #         subject.append(subject_)
-    #         classroomID.append(classroomID_)
+            courseID.append(courseID_)
+            subject.append(subject_)
+            classroomID.append(classroomID_)
 
-    #     courseID.pop(0)
-    #     subject.pop(0)
-    #     classroomID.pop(0)
+        courseID.pop(0)
+        subject.pop(0)
+        classroomID.pop(0)
 
-    # print classroomID 
+    # print classroomID[0]
     
-    # classSubject = {}
-    # for x in range(len(courseID)):
-    #     classSubject.update( {courseID[x] : subject[x]} )
+    classSubject = {}
+    for x in range(len(courseID)):
+        classSubject.update( {courseID[x] : subject[x]} )
 
-    # f = open("haverford_classSubject.txt","w+")
-    # for i in classSubject:
-    #     f.write("{}\t{}\n".format(i, classSubject[i]))
-    # f.close()
+    f = open("haverford_classSubject.txt","w+")
+    for i in classSubject:
+        f.write("{}\t{}\n".format(i, classSubject[i]))
+    f.close()
 
-    # roomAndSubject = {}
-    # for x in range(len(subject)):
-    #     roomAndSubject.update( { classroomID[x]: subject[x] } )
+    roomAndSubject = {}
+    for x in range(len(subject)):
+        roomAndSubject.update( { classroomID[x]: subject[x] } )
 
-    # sortedSubjectClassroom = {}
-    # roomOptions = []
-    # for x in range(len(subject)):
-    #     if subject[x] in sortedSubjectClassroom:
-    #         if classroomID[x] not in sortedSubjectClassroom[subject[x]] and is_nan(classroomID[x]) == False:
-    #             if tuple((classroomID[x], roomSize[classroomID[x]])) not in sortedSubjectClassroom[subject[x]]:
-    #                 # print(classroomID[x], roomSize[classroomID[x]])
-    #                 toAppend = tuple((classroomID[x], roomSize[classroomID[x]]))
-    #                 sortedSubjectClassroom[subject[x]].append(toAppend)
-    #     else:
-    #         toAppend = tuple((classroomID[x], roomSize[classroomID[x]])) 
-    #         sortedSubjectClassroom.update({subject[x] : [toAppend]})
+    sortedSubjectClassroom = {}
+    roomOptions = []
+    for x in range(len(subject)):
+        if subject[x] in sortedSubjectClassroom:
+            if classroomID[x] not in sortedSubjectClassroom[subject[x]] and is_nan(classroomID[x]) == False:
+                if tuple((classroomID[x], roomSize[classroomID[x]])) not in sortedSubjectClassroom[subject[x]]:
+                    # print(classroomID[x], roomSize[classroomID[x]])
+                    toAppend = tuple((classroomID[x], roomSize[classroomID[x]]))
+                    sortedSubjectClassroom[subject[x]].append(toAppend)
+        else:
+            toAppend = tuple((classroomID[x], roomSize[classroomID[x]])) 
+            sortedSubjectClassroom.update({subject[x] : [toAppend]})
 
-    # for k in sortedSubjectClassroom:
-    #     sortedSubjectClassroom[k].sort(key=lambda tup: tup[1], reverse=True)
+    for k in sortedSubjectClassroom:
+        sortedSubjectClassroom[k].sort(key=lambda tup: tup[1], reverse=True)
 
-    # f = open("haverford_sortedSubjectClassroom.txt","w+")
-    # for i in sortedSubjectClassroom:
-    #     f.write("{}\t{}\n".format(i, sortedSubjectClassroom[i]))
-    # f.close()
+    f = open("haverford_sortedSubjectClassroom.txt","w+")
+    for i in sortedSubjectClassroom:
+        f.write("{}\t{}\n".format(i, sortedSubjectClassroom[i]))
+    f.close()
 
 
     # overview of all arrays created in this function
