@@ -154,11 +154,11 @@ def BMCparse():
         f.write("{}\n".format(i))
     f.close()
 
-    timeTupes = list(zip(startTime, endTime, daysOfWeek))
+    timeTuples = list(zip(startTime, endTime, daysOfWeek))
 
     f = open("brynmawr_allTimes.txt","w+")
     # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
-    for i in timeTupes:
+    for i in timeTuples:
         f.write("{}\n".format(i))
     f.close()
 
@@ -230,7 +230,7 @@ def BMCparse():
     startTime = [] - list of start times 
     endTime = [] - list of end times
     daysOfWeek = [] - list of days a timeslot is run 
-    timeTupes = {} - previous three lists correspond to one another and are all formatted in this data structure 
+    timeTuples = {} - previous three lists correspond to one another and are all formatted in this data structure 
 
     classes = [] - list of classes
     professorOfClass = [] - list of professors
@@ -249,11 +249,9 @@ def BMCparse():
     sortedSubjectClassroom = {} - dictionary of subject_:[list of tuples that store (classroomID, classroomCap) that are availble for that key/subject_] where the items in the second part of the tuple, meaning the classroomIDs, are sorted in order of LARGEST cap room to SMALLEST cap room
     """
 
-    return daysOfWeek, startTime, endTime, timeTupes, classes, professorOfClass, studentCap, subject, classSubject, subject_, classroomID, classroomCap, roomSize, roomAndSubject, sortedSubjectClassroom
+    return daysOfWeek, startTime, endTime, timeTuples, classes, professorOfClass, studentCap, subject, classSubject, subject_, classroomID, classroomCap, roomSize, roomAndSubject, sortedSubjectClassroom
 
 def HCparse():
-
-
 
     # make classLevel, {classID: classLevel}
     
@@ -312,14 +310,14 @@ def HCparse():
     
     # print daysOfWeek
 
-    timeTupes = list(zip(timeID, startTime, endTime, daysOfWeek))
+    timeTuples = list(zip(timeID, startTime, endTime, daysOfWeek))
 
     f = open("haverford_times.txt","w+")
     # f.write("Course\tRoom\tTeacher\tTime\tStudents\n")
-    for i in range(len(timeTupes)):
+    for i in range(len(timeTuples)):
         f.write("{}\t{}\t{}\n".format(startTime[i], endTime[i], daysOfWeek[i]))
 
-    for i in timeTupes: 
+    for i in timeTuples: 
         f.write("{}\n".format(i))
     f.close()
 
@@ -435,55 +433,53 @@ def HCparse():
 
 
 
+    with open('haverford/haverford-class-professor.csv') as csvfile:
+        readclassHC = csv.reader(csvfile, delimiter = ',')
 
-    
-    professorOfClass = []
-    # course__ID = []
-    # __subject = []
-    with open('haverford/haverfordEnrollmentDataS14.csv') as csvfile:
-        readCSV = csv.reader(csvfile, delimiter = ',')
-        for row in readCSV:
-            professorOfClass_ = row[11]
-            professorOfClass.append(professorOfClass_)
+        courseID = []
+        subject = []
+        classroomID = []
+        professorID = []
 
-            # courseID_ = row[1]
-            # subject_ = row[2]
-
-            # courseID.append(courseID_)
-            # subject.append(subject_)
-     
-    professorOfClass.pop(0)
-
-    # f.close()
-
-
-
-    courseID = []
-    subject = []
-    classroomID = []
-    
-    # new excel file made by Lizzy
-    with open('haverford/haverford-classroom-data.csv') as csvfile:
-        readHC = csv.reader(csvfile, delimiter = ',')
-
-        for row in readHC:
+        for row in readclassHC:
             courseID_ = row[0]
             subject_ = row[1]
-            classroomID_ = row[2]
+            classroomID_ = row[9]
+            professorID_ = row[2]
 
             courseID.append(courseID_)
             subject.append(subject_)
             classroomID.append(classroomID_)
+            professorID.append(professorID_)
 
         courseID.pop(0)
         subject.pop(0)
         classroomID.pop(0)
+        professorID.pop(0)
 
-    # print classroomID[0]
+    print len(courseID)
+    print len(professorID)
+    print len(subject)
+    print len(classroomID)
+
+    testTuples = list(zip(classroomID, courseID, subject, professorID))
+        
+    f = open("TEST.txt","w+")
+    for i in testTuples:
+        f.write("{}\n".format(i))
+    f.close()
+
+
+    # classroomID_filtered = list(filter(None, classroomID))
+    # classroomID_fromtxt.sort()
+    # classroomID_filtered = list(set(classroomID_filtered))
+    # classroomID_filtered.sort()
+
 
     classSubject = {}
     for x in range(len(courseID)):
         classSubject.update( {courseID[x] : subject[x]} )
+
 
     f = open("haverford_classSubject.txt","w+")
     for i in classSubject:
@@ -556,8 +552,8 @@ def HCparse():
 
     # return professorOfClass, courseID, subject, classroomID, classSubject, timeID, startTime, endTime, daysOfWeek, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, students, preferences, preferencesDict,sortedSubjectClassroom
 
-    # return timeID, startTime, endTime, daysOfWeek, timeTupes, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, studentNumber, student_pref, studentPreferences, courseID, subject, classroomID, classSubject, roomAndSubject, sortedSubjectClassroom
-    return classLevel, professorOfClass, courseID, subject, classSubject, timeID, startTime, endTime, daysOfWeek, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, studentNumber, preferences, preferencesDict,sortedSubjectClassroom
+    # return timeID, startTime, endTime, daysOfWeek, timeTuples, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, studentNumber, student_pref, studentPreferences, courseID, subject, classroomID, classSubject, roomAndSubject, sortedSubjectClassroom
+    # return classLevel, professorID, courseID, subject, classSubject, timeID, startTime, endTime, daysOfWeek, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, studentNumber, preferences, preferencesDict,sortedSubjectClassroom
 
 # Convert times to 24-hour format (for comparison).
 
@@ -981,8 +977,9 @@ def mainHC(classLevelMode = False, overlapTimeMode = False, relationMode = False
 """
 
 if __name__ == "__main__":
-    mainHC(overlapTimeMode =False, relationMode = False, subjectClassroomMode=False)
+    # mainHC(overlapTimeMode =False, relationMode = False, subjectClassroomMode=False)
     start_time=time.time()
     # mainHC(classLevelMode=False, overlapTimeMode = False, relationMode = False, subjectClassroomMode=True)
+    HCparse()
     # main()
     print("%s seconds" %(time.time() - start_time))
