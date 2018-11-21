@@ -3,42 +3,10 @@
 """
 Created on Fri Nov  2 21:17:46 2018
 
-@author: Elizabeth Chan, Tessa Pham, Xinyi Wang
+Authors: Elizabeth Chan, Tessa Pham, Xinyi Wang
 
 """
 
-"""
-Structure:
-
-1. Parsing the file
-
-    - parseTXT() function parses the demo data file
-        return students, preferences, classes, times, professorOfClass, classrooms, sizes
-    - parseExcel() function to be added, to parse the excel data
-
-This function incurs cheap costs.
-
-2. Constructing the data
-
-    - construct(students, preferences, classes)
-        return studentsInClass, overlap, classes
-
-    After we load the data in by either parseTXT() or parseExcel(), we feed the
-    data into this construct function. The construct function takes inputs:
-        students, preferences, classes, classrooms, sizesOfClassrooms, times
-    and outputs:
-        studentsInClass, overlap, classes, availableRoomsInTime
-
-    The complexity of this function is O(k log k)+ O(w), which is the complexity to
-    process the data
-
-3. Assign the Classes to times
-    assignClassToTime(c,availableRoomsInTime,professorsInTime,classesInTime,studentsInClass,professorOfClass,times,overlap,classes)
-
-
-"""
-
-# parsing excel
 import os
 import pandas as pd
 import xlrd
@@ -137,7 +105,8 @@ def parseTXT():
     return roomSize, students, preferences, classes, times, professorOfClass
 
 
-# parsing for bmc data:
+# Parsing for BMC data.
+
 def is_nan(x):
     return (x is np.nan or x != x)
 
@@ -145,7 +114,7 @@ def BMCparse():
 
     BMCexcel = pd.read_excel('brynmawr/bmc-data-f17.xls')
 
-    # times = [] has been replaced with following three lists 
+    # times = [] has been replaced with following three lists:
     daysOfWeek = BMCexcel["Days 1"]
     startTime = BMCexcel["Srt1 AM/PM"]
     endTime = BMCexcel["End 1 AMPM"]
@@ -282,9 +251,6 @@ def BMCparse():
 
     return daysOfWeek, startTime, endTime, timeTupes, classes, professorOfClass, studentCap, subject, classSubject, subject_, classroomID, classroomCap, roomSize, roomAndSubject, sortedSubjectClassroom
 
-
-
-
 def HCparse():
 
     professorOfClass = []
@@ -417,15 +383,15 @@ def HCparse():
         classID_teacherID = dict(zip(classID, teacherID))
 
 
-        #make classLevel, {classID: classLevel}
+        # make classLevel, {classID: classLevel}
         
-        classLevel={}
+        classLevel = {}
         with open('haverford/haverfordEnrollmentDataS14.csv') as csvfile:
             readCSV = csv.reader(csvfile, delimiter = ',')
             for row in readCSV:
                 level = row[4]
-                classnum=row[1]
-                classLevel[classnum]=level                 
+                classnum = row[1]
+                classLevel[classnum] = level            
         
         # print classID_teacherID
 
@@ -518,49 +484,7 @@ def HCparse():
             f.write("{}\t{}\n".format(i, sortedSubjectClassroom[i]))
         f.close()
 
-
-
-        # overview of all arrays created in this function
-        """
-        **see txt files with [college]_[name of data structure].txt for external version of parsed data
-
-        !!following are from haverfordConstraints file 
-
-        timeID = [] - list of times from 1 - 60
-        startTime = [] - list of start times 
-        endTime = [] - list of end times 
-        daysOfWeek = [] - list of the days the times are scheduled for
-        timeTuples = [] - a list of tuples of all this data meshed into one 
-
-        classroomID_fromtxt = [] - list of room names specifically from haverfordConstraints file
-        classroomCap = [] - list of room size capacity 
-        roomSize = {} - dictionary of roomSizeName:classroomCap
-
-        !!following are parsed from other haverfordfile (haverfordConstraints_withZeros) in which i filled in zeros for when there isn't a corresponding teacherID for a particular classID
-
-        classID = [] - list of classID 
-        teacherID = [] - list of teacherID
-        classID_teacherID = {} - dictionary of classID:teacherID correspondence 
-
-        !!following are parsed from haverfordStudentPrefs.txt
-
-        studentNumber = [] - list of student ID numbers
-        student_pref = [] - list of student preferences 
-        studentPreferences = {} - dictionary of studentNumber:student_pref ie a students ID number and their corresponding list of classID preferences
-
-        !!following are parsed from haverford-classroom-data.csv
-        courseID = [] - list of IDs for each course
-        subject = [] - list of subjects
-        classroomID = [] = list of the IDs for each classroom 
-        classSubject = {} - dictionary of courseID:subject
-
-        roomAndSubject = {} - dictionary of classroomID:subject
-        sortedSubjectClassroom = {} - dictionary of subject_:[list of tuples that store (classroomID, classroomCap) that are availble for that key/subject] where the items in the second part of the tuple, meaning the classroomIDs, are sorted in order of LARGEST cap room to SMALLEST cap room
-        """
-
         return classLevel, professorOfClass, courseID, subject, classSubject, timeID, startTime, endTime, daysOfWeek, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, students, preferences, preferencesDict,sortedSubjectClassroom
-
-        # return timeID, startTime, endTime, daysOfWeek, timeTupes, classroomID_fromtxt, classroomCap, roomSize, classID, teacherID, classID_teacherID, studentNumber, student_pref, studentPreferences, courseID, subject, classroomID, classSubject, roomAndSubject, sortedSubjectClassroom
 
 # Convert times to 24-hour format (for comparison).
 
@@ -583,7 +507,7 @@ def getOverlappingTimes(timeTuples):
     # overlapsWithTime: a dictionary {time: all times that overlap with this time}
     overlapsWithTime = {i: [] for i in timeIDs}
 
-    # sort MWF and TR by start times
+    # sort MWF and TTH by start times
     MWF = sorted(MWF, key = lambda x: x[1])
     TTH = sorted(TTH, key = lambda x: x[1])
 
@@ -612,11 +536,10 @@ def construct(students, preferences, classes, roomSize, times, classSubject = No
     # ASSUME that classes is a list of tuples: c in classes = (major, class #)
 
     # studentsInClass: a dictionary (key = class, value = list of students in that class)
-    # studentsInClass = {c: [] for c in range(0, 15)}
     studentsInClass = {c: [] for c in classes}
     # overlap: a 2D matrix (row = all classes, column = all classes, entry at (i, j) = # of students taking both classes i and j)
     overlap = {(c1, c2): 0 for c1 in classes for c2 in classes}
-    # overlap = [[0 for c in classes] for c in classes]
+
     relation = None
     
     if relationMode:
@@ -728,22 +651,20 @@ def assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, 
 def assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, \
                           profOfCDict, times, overlap, classes, timeOfClass, roomSize, roomOfClass, \
                           classSubject, sortedSubjectClassroom, overlapsWithTime, relation, \
-                          classLevel, classLevelTimeRecord, classLevelMode=False, \
+                          classLevel, classLevelTimeRecord, classLevelMode = False, \
                           overlapTimeMode = False, relationMode = False, subjectClassroomMode = False):
     min_overlap = float("inf")
     chosen_time = times[0]
-
     prof = profOfCDict[c]
-    
     
     if (subjectClassroomMode):
         try:
-            subject=classSubject[c]
+            subject = classSubject[c]
         except KeyError:
-            subjectClassroomMode=False
+            subjectClassroomMode = False
     
     for t in times:
-        count=0
+        count = 0
         # skip if the professor teaching class c is already teaching another class in this time
         if (len(professorsInTime[t]) != 0) & (prof in professorsInTime[t]):
             continue
@@ -755,33 +676,34 @@ def assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, 
 # than the size of the biggest available room in time t
         if (subjectClassroomMode):
             # print("Processing things in subjectClassroomMode.\n")
-            stop=False
-            i=0
-            lenClassroom=len(sortedSubjectClassroom[subject]) #so you want it small to big
-            while stop is False and i<lenClassroom:
-                room=sortedSubjectClassroom[subject][i][0]
+            stop = False
+            i = 0
+            lenClassroom = len(sortedSubjectClassroom[subject]) #so you want it small to big
+            while stop is False and i < lenClassroom:
+                room = sortedSubjectClassroom[subject][i][0]
                 if len(studentsInClass[c]) <= int(roomSize[room]):
                     if (room,roomSize[room]) in availableRoomsInTime[t]:
-                        stop=True
-                        tooSmall=False
+                        stop = True
+                        tooSmall = False
                     else:
                         i += 1 # this room is taken, try next one
                 else:
-                    stop=True
-                    tooSmall=True  #it means that even the biggest subject-legit classroom's not big enough               
-            if i==lenClassroom or tooSmall==True:
+                    stop = True
+                    tooSmall = True  #it means that even the biggest subject-legit classroom's not big enough               
+            if i == lenClassroom or tooSmall == True:
                 continue
             for assigned_c in classesInTime[t]:
-                count += overlap[c,assigned_c]
+                count += overlap[c, assigned_c]
     
             if count < min_overlap:
                 min_overlap = count
                 chosen_time = t
-#i==lenClassroom means that all subject-eligible classrooms are taken at this time
+        
+        # i == lenClassroom means that all subject-eligible classrooms are taken at this time
         else:
-            #print("subjectClassroomMode is off. \n")
+            # print("subjectClassroomMode is off. \n")
             if (overlapTimeMode & relationMode):
-                #print("overlapTimeMode and relationMode is on. \n")
+                # print("overlapTimeMode and relationMode is on. \n")
                 if c not in list(classSubject.keys()):
                     return
                 for assigned_c in classesInTime[t]:
@@ -799,7 +721,7 @@ def assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, 
                     min_overlap = count
                     chosen_time = t
             else:
-                #print("Basic Mode.\n")
+                # print("Basic Mode.\n")
                 if len(availableRoomsInTime[t]) == 0:
                     continue
                 if len(studentsInClass[c]) > int(availableRoomsInTime[t][-1][1]):
@@ -811,10 +733,6 @@ def assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, 
                     chosen_time = t
     if (classLevel):
         classLevelTimeRecord[t,classSubject[c]].append(classLevel[c])
-
-    # add class c to the chosen time
-    classesInTime[chosen_time].append(c)
-    # add the professor teaching class c to the list of professors occupied in the chosen time
 
     # add class c to the chosen time
     classesInTime[chosen_time].append(c)
@@ -874,19 +792,24 @@ def main():
     for s in students:
         preferencesDict[s] = preferences[int(s)]
     for c in classes:
-        assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, profOfCDict, times, overlap, classes, timeOfClass, roomOfClass, overlapTimeMode = False, overlapsWithTime = None, relationMode = False, classSubject = None, relation = None)
+        # assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, profOfCDict, times, overlap, classes, timeOfClass, roomOfClass, overlapTimeMode = False, overlapsWithTime = None, relationMode = False, classSubject = None, relation = None)
+        assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, \
+                          profOfCDict, times, overlap, classes, timeOfClass, roomSize, roomOfClass, \
+                          classSubject = None, sortedSubjectClassroom = None, overlapsWithTime = None, relation = None, \
+                          classLevel = None, classLevelTimeRecord = None, classLevelMode=False, \
+                          overlapTimeMode = False, relationMode = False, subjectClassroomMode = False)
 
     # Now calculate optimality.
 
     studentsTakingClass = calculateStudentsInClass(timeOfClass, classes, students, preferencesDict)
 
-    f = open("schedule.txt", "w+")
-    f.write("Course" + '\t' + "Room" + '\t' + "Teacher" + '\t' + "Time" + '\t' + "Students" + '\n')
-    for i in range(len(classes)):
-        c = classes[i]
-        f.write(str(c) + '\t' + str(roomOfClass[c]) + '\t' + professorOfClass[c] + '\t' + timeOfClass[c] + '\t' + ' '.join(studentsTakingClass[c]) + '\n')  
-    with open("schedule.txt") as f:
-        print(f.read())
+    # f = open("schedule.txt", "w+")
+    # f.write("Course" + '\t' + "Room" + '\t' + "Teacher" + '\t' + "Time" + '\t' + "Students" + '\n')
+    # for i in range(len(classes)):
+    #     c = classes[i]
+    #     f.write(str(c) + '\t' + str(roomOfClass[c]) + '\t' + professorOfClass[c] + '\t' + timeOfClass[c] + '\t' + ' '.join(studentsTakingClass[c]) + '\n')  
+    # with open("schedule.txt") as f:
+    #     print(f.read())
     
     total = 0
     for key in studentsTakingClass:
@@ -895,7 +818,7 @@ def main():
     print(opt)
 
 
-def mainHC(classLevelMode=False, overlapTimeMode = False, relationMode = False, subjectClassroomMode=False):
+def mainHC(classLevelMode = False, overlapTimeMode = False, relationMode = False, subjectClassroomMode = False):
     # Below is how we will use HCparse() to get a list of mutually exclusive time slots.
     
     # professorOfClass, courseID, subject, classSubject, timeID, startTime, endTime, daysOfWeek, classroomID, classroomCap, roomSize, classID, teacherID, classID_teacherID, students, preferences, preferencesDict = HCparse()
@@ -935,20 +858,18 @@ def mainHC(classLevelMode=False, overlapTimeMode = False, relationMode = False, 
             assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, \
                           profOfCDict, times, overlap, classes, timeOfClass, roomSize, roomOfClass, \
                           classSubject, sortedSubjectClassroom, overlapsWithTime, relation, \
-                          classLevel, classLevelTimeRecord, classLevelMode=classLevelMode, \
+                          classLevel, classLevelTimeRecord, classLevelMode = classLevelMode, \
                           overlapTimeMode = overlapTimeMode, relationMode = relationMode, subjectClassroomMode = subjectClassroomMode)
         except KeyError:
             continue
-        # assignClassToTime(c, availableRoomsInTime, professorsInTime, classesInTime, studentsInClass, profOfCDict, timeID, overlap, classes, timeOfClass, roomOfClass, overlapsWithTime, classSubject, relation, overlapTimeMode = True, relationMode = True)
+
     # Now calculate optimality.
 
     studentsTakingClass = calculateStudentsInClass(timeOfClass, classes, students, preferencesDict)
 
-    f = open("schedule.txt", "w+")
-    f.write("Course" + '\t' + "Room" + '\t' + "Teacher" + '\t' + "Time" + '\t' + "Students" + '\n')
+    # f = open("schedule.txt", "w+")
+    # f.write("Course" + '\t' + "Room" + '\t' + "Teacher" + '\t' + "Time" + '\t' + "Students" + '\n')
 
-    # filteredClasses = list(classSubject.keys())
-    # for c in filteredClasses:
     for c in classes:
         try: 
             f.write(str(c) + '\t' + str(roomOfClass[c]) + '\t' + profOfCDict[c] + '\t' + timeOfClass[c] + '\t' + ' '.join(studentsTakingClass[c]) + '\n')
@@ -985,5 +906,6 @@ def mainHC(classLevelMode=False, overlapTimeMode = False, relationMode = False, 
 
 if __name__ == "__main__":
     start_time=time.time()
-    mainHC(classLevelMode=False, overlapTimeMode = False, relationMode = False, subjectClassroomMode=True)
+    # mainHC(classLevelMode=False, overlapTimeMode = False, relationMode = False, subjectClassroomMode=True)
+    main()
     print("%s seconds" %(time.time() - start_time))
