@@ -1235,19 +1235,18 @@ def main():
 
     studentsTakingClass = calculateStudentsInClass(timeOfClass, classes, students, preferencesDict)
 
-    f = open("schedule.txt", "w+")
-    f.write("Course" + '\t' + "Room" + '\t' + "Teacher" + '\t' + "Time" + '\t' + "Students" + '\n')
-    for i in range(len(classes)):
-        c = classes[i]
-        f.write(str(c) + '\t' + str(roomOfClass[c]) + '\t' + professorOfClass[c] + '\t' + timeOfClass[c] + '\t' + ' '.join(studentsTakingClass[c]) + '\n')  
-    with open("schedule.txt") as f:
-        print(f.read())
+    # f.write("Course" + '\t' + "Room" + '\t' + "Teacher" + '\t' + "Time" + '\t' + "Students" + '\n')
+    # for i in range(len(classes)):
+    #     c = classes[i]
+    #     f.write(str(c) + '\t' + str(roomOfClass[c]) + '\t' + professorOfClass[c] + '\t' + timeOfClass[c] + '\t' + ' '.join(studentsTakingClass[c]) + '\n')  
+    # with open("schedule.txt") as f:
+    #     print(f.read())
     
     total = 0
     for key in studentsTakingClass:
         total += len(studentsTakingClass[key])
     opt = total / float((len(students) * 4))
-    print opt
+    return opt
 
 
 def mainHC(classLevelMode = False, overlapTimeMode = False, relationMode = False, subjectClassroomMode = False):
@@ -1344,5 +1343,12 @@ if __name__ == "__main__":
     start_time = time.time()
     # mainHC(classLevelMode = False, overlapTimeMode = False, relationMode = False, subjectClassroomMode = False)
     # HCparse()
-    main()
-    print("%s seconds" %(time.time() - start_time))
+    opt = main()
+    total = time.time() - start_time
+    print("%s seconds" %(total))
+    print("%s opt" %(opt))
+    # f = open("listoftests.txt", "w+")
+    # f.write("time: {}".format(total))
+    # f.write("opt: {}".format(opt))
+    
+

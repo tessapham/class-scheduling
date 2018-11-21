@@ -51,29 +51,60 @@ for ((i = minT; i<=maxT; i+=(maxT/5))); do
 done
 
 
-# echo "${TIMES[@]}"
-# echo "${#TIMES[@]}"
+
+maxR=500
+ROOMS=()
+for ((i = 50; i<=maxR; i+=(maxR/10))); do
+    # echo "Element $i"
+    # for ((i = 0; i<minT; i++)); do
+    ROOMS+=($i)
+    ROOMS+=($i)
+    ROOMS+=($i)
+    ROOMS+=($i)
+    ROOMS+=($i)
+    ROOMS+=($i)
+    ROOMS+=($i)
+    ROOMS+=($i)
+    ROOMS+=($i)
+    ROOMS+=($i)
+    # done 
+done
+
+
+echo "${ROOMS[@]}"
+echo "${#ROOMS[@]}"
 
 
 
 echo -n "" > listoftests.txt
 # now loop through the above array
-# x=0
-# for ((i = 0; i<=${#CLASSES[@]}; i++)); do
-#     echo -e "50 \t ${CLASSES[$i]} \t ${TIMES[$x]} \t 1000" >> listoftests.txt
-#     perl basic/make_random_input.pl 50 $i $x 1000 basic/constraints.txt basic/pref.txt
+echo -e "numRooms \t numClasses \t numSlots \t numStudent" >> listoftests.txt 
+y=0
+x=0
+for ((i = 0; i<${#CLASSES[@]}; i++)); do
+    echo -e "${ROOMS[$i]} \t ${CLASSES[$i]} \t ${TIMES[$x]} \t 1000" >> listoftests.txt
+    echo -n "" > basic/constraints.txt
+    echo -n "" > basic/pref.txt
+    perl basic/make_random_input.pl 50 ${CLASSES[$i]} ${TIMES[$x]} 1000 basic/constraints.txt basic/pref.txt
+    python ClassScheduling.py
+
+    ((x++))
+    ((y++))
+    if [[ $(( $x % 5 )) == 0 ]]; then
+        x=0 
+    fi
+
+    if [[ $(( $y % 10 )) == 0 ]]; then
+        y=0 
+    fi
+
+   # or do whatever with individual element of the array
+done
+
+# for ((i = 0; i<=2; i++)); do
+#     echo -n "" > basic/constraints.txt
+#     echo -n "" > basic/pref.txt
+#     perl basic/make_random_input.pl 50 i i 1000 basic/constraints.txt basic/pref.txt
 #     python ClassScheduling.py
-
-#     ((x++))
-#     if [[ $(( $x % 5 )) == 0 ]]; then
-#         x=0 
-#     fi
-
-#    # or do whatever with individual element of the array
-# done
-
-# for ((i = 0; i<=5; i++)); do
-perl basic/make_random_input.pl 50 10 10 1000 basic/constraints.txt basic/pref.txt
-python ClassScheduling.py
 # done
 

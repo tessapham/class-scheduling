@@ -35,7 +35,7 @@ import csv
 import datetime
 import math
 import numpy as np
-
+import time
 
 # write multiple parse functions (for the demo file, for the preference lists of students, etc.) if necessary
 
@@ -927,3 +927,12 @@ def mainHC(overlapTimeMode = False, relationMode = False, subjectClassroomMode=F
     print("studentsTakingClass", studentsTakingClass)
     print(students, '\n', '\n', preferences, '\n', '\n', classes, '\n', '\n', times, '\n', '\n', professorOfClass)
 """
+
+
+if __name__ == "__main__":
+    # mainHC(overlapTimeMode =False, relationMode = False, subjectClassroomMode=False)
+    start_time = time.time()
+    # mainHC(classLevelMode = False, overlapTimeMode = False, relationMode = False, subjectClassroomMode = False)
+    # HCparse()
+    main()
+    print("%s seconds" %(time.time() - start_time))

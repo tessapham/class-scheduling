@@ -58,9 +58,8 @@ if ($numrooms * $maxroomcapacity * $numslots < 4 * $numstudents) {
 }
 
 
-truncate 'constraints.txt', 0;
 open (CONSTRAINT, ">> $constraintfile") || die "Can't open file: $constraintfile\n";
-
+truncate 'constraints.txt', 0;
 print CONSTRAINT "Class Times\t$numslots\n";
 print CONSTRAINT "Rooms\t$numrooms\n";
 foreach my $room ((1..$numrooms)) {
@@ -87,7 +86,6 @@ foreach my $class ((1..$numclasses)) {
 
 close CONSTRAINT;
 
-truncate 'pref.txt', 0;
 open (PREFS, ">> $prefsfile") || die "Can't open file: $prefsfile\n";
 
 print PREFS "Students\t$numstudents\n";
