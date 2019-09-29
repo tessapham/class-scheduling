@@ -1,26 +1,24 @@
-Major code construct:
+This is a proposed solution to the class scheduling problem of Bryn Mawr and Haverford Colleges, created by **Xinyi Wang**, **Elizabeth Chan**, and **Tessa Pham** with a **0.8** optimality.
+
+Code construction:
     
     - parseTXT(): 
-        Parsing the demo/randomly generated data
+        Parses the demo (randomly-generated) data.
 
     - construct(...): 
-        construct data parsed by parseTXT()
+        Constructs data parsed by parseTXT().
     
     - parseHC.py: 
-        Containing all functions we wrote to parse and process Haverford data
+        Contains all functions we wrote to parse and processes Haverford data.
     
     - assignClassToTime(...): 
-        assign a class to a schedule, using either demo data or HC data
+        Assigns a class to a schedule, using either demo data or HC data.
     
     - calculateStudentsInClass(...): 
-        a naive function calculating the optimality of the schedule
+        A naive function for calculating the optimality of the schedule.
     
     - main(): 
-        Calls parseTXT(), construct(...), and assignClassToTime(...) to create 
-        a schedule from demo/randomly generated data, and calls calculateStudentsInClass(...) 
-        to reports the optimality
+        Calls parseTXT(), construct(...), and assignClassToTime(...) to create a schedule from demo/randomly generated data, and calls calculateStudentsInClass(...) to report the optimality.
     
     - mainHC(): 
-        Calls functions in parseHC.py and assignClassToTime(...) to create 
-        a schedule from demo/randomly generated data, and calls calculateStudentsInClass(...) 
-        to reports the optimality
+        Calls functions in parseHC.py and assignClassToTime(...) to create a schedule from demo/randomly generated data, and calls calculateStudentsInClass(...) to report the optimality.
