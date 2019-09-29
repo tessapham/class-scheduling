@@ -90,7 +90,7 @@ def get_class_times(list_of_dicts):
 # Currently catches some "labs" that aren't actually labs for those courses.
 # Course '333' seems especially to be a strange corner case.
 # The issue may also be that this doesn't take sections into account in matching.
-#def get_lab_courses(list_of_dicts):
+# def get_lab_courses(list_of_dicts):
 #  lab_courses = {}
 #  student_courses = get_student_prefs_enrolled(list_of_dicts)
 #  courses = get_courses(list_of_dicts)
@@ -168,8 +168,9 @@ def write_constraints_to_file(list_of_dicts, filename):
   f.close()
 
 if len(sys.argv) != 4:
-  print "Usage: " + sys.argv[0] + " <enrollment.csv> <student_prefs.txt> <constraints.txt>"
-  exit(1) 
+  print("Usage: " + sys.argv[0] + " <enrollment.csv> <student_prefs.txt> <constraints.txt>")
+  exit(1)
+
 list_of_dicts = get_data_list_of_dicts(sys.argv[1])
 write_prefs_to_file(list_of_dicts, sys.argv[2])
 write_constraints_to_file(list_of_dicts, sys.argv[3])

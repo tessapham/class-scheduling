@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Nov 21 08:08:14 2018
-
-@author: xinyiwang
+Authors: Xinyi Wang, Elizabeth Chan, Tessa Pham
 """
+
 import time
 import ClassSchedulingEx234
 import ClassSchedulingEx1

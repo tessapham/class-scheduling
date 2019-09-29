@@ -139,7 +139,7 @@ professorOfClass [0, '4', '4', '2', '1', '1', '3', '3', '2']
 
     return roomSize, students, preferences, classes, times, professorOfClass
 
-def BMCparse():
+def parseBMC():
 
     BMCexcel = pd.read_excel('brynmawr/bmc-data-f17.xls')
 
@@ -430,7 +430,7 @@ def mainBMC():
 
 """
 
-def HCparse():
+def parseHC():
     # HCexcel = pandas.read_excel('haverford/haverfordEnrollmentDataS14.csv')
 
     with open('haverford/haverfordEnrollmentDataS14.csv') as csvfile:
@@ -693,4 +693,4 @@ def is_nan(x):
     return (x is np.nan or x != x)
 
 if __name__ == "__main__":
-    HCparse()
+    parseHC()
