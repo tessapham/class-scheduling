@@ -19,10 +19,10 @@ Code construction:
     A naive function for calculating the optimality of the schedule.
 
 - main(): 
-    Calls parseTXT(), construct(...), and assignClassToTime(...) to create a schedule from
-    demo and randomly-generated data, then calls calculateStudentsInClass(...) to report the optimality.
+    Calls parseTXT(), construct(...), and assignClassToTime(...) to create a schedule from the demo
+    and randomly-generated data, then calls calculateStudentsInClass(...) to report the optimality.
 
 - mainHC(): 
-    Calls functions in parseHC.py and assignClassToTime(...) to create a schedule from
-    demo and randomly-generated data, then calls calculateStudentsInClass(...) to report the optimality.
+    Calls functions in parseHC.py and assignClassToTime(...) to create a schedule from the demo
+    and randomly-generated data, then calls calculateStudentsInClass(...) to report the optimality.
 ```
